@@ -1,10 +1,35 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:phase5_project/screens/CreateScreen/create_screen.dart'; // Import the CreateScreen
-import 'package:phase5_project/screens/EventScreen/event_screen.dart'; // Import the EventScreen
-import 'package:phase5_project/screens/LoginScreen/login_screen.dart'; // Import the LoginScreen
+import 'package:http/http.dart' as http;
+import 'package:phase5_project/screens/CreateScreen/create_screen.dart';
+import 'package:phase5_project/screens/EventScreen/event_screen.dart';
+import 'package:phase5_project/screens/LoginScreen/login_screen.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  String url = '';
+  var data;
+  String output = 'Initial Output';
+  String errorMessage = '';
+
+  Future<String> fetchData(String url) async {
+    try {
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        return response.body;
+      } else {
+        throw Exception('Failed to load data');
+      }
+    } catch (e) {
+      throw Exception('Error fetching data: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +41,6 @@ class HomeScreen extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.logout),
             onPressed: () {
-              // Navigate to LoginScreen when the "Log Out" button is clicked
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (context) => LoginScreen()),
@@ -40,7 +64,40 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
           ),
-
+          // TextField and Fetch Button
+          Center(
+            child: Column(
+              children: [
+                TextField(
+                  onChanged: (value) {
+                    setState(() {
+                      url =
+                          'http://127.0.0.1:5555/api?query=' + value.toString();
+                    });
+                  },
+                ),
+                TextButton(
+                  onPressed: () async {
+                    try {
+                      data = await fetchData(url);
+                      var decoded = jsonDecode(data);
+                      setState(() {
+                        output = decoded['output'];
+                      });
+                    } catch (e) {
+                      setState(() {
+                        errorMessage = e.toString();
+                      });
+                    }
+                  },
+                  child: const Text('Fetch ASCII Value'),
+                ),
+                Text(output),
+                if (errorMessage.isNotEmpty)
+                  Text(errorMessage, style: TextStyle(color: Colors.red)),
+              ],
+            ),
+          ),
           // Gridview of images
           Expanded(
             child: GridView.count(
@@ -62,13 +119,11 @@ class HomeScreen extends StatelessWidget {
               }),
             ),
           ),
-
           // "Host" button at the bottom of the page
           Container(
             padding: const EdgeInsets.all(16.0),
             child: ElevatedButton(
               onPressed: () {
-                // Navigate to CreateScreen when the "Host" button is clicked
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => CreateScreen()),
@@ -95,9 +150,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
         onTap: (int index) {
-          // Handle taps on the bottom navigation bar items
           if (index == 1) {
-            // If the home icon is tapped (index 1), navigate to HomeScreen
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => const HomeScreen()),

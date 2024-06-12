@@ -145,7 +145,7 @@ class EventScreen extends StatelessWidget {
             // If the home icon is tapped (index 1), navigate to HomeScreen
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()),
+              MaterialPageRoute(builder: (context) => HomeScreen()),
             );
           }
         },
