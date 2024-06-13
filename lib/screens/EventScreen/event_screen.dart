@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:phase5_project/screens/HomeScreen/home_screen.dart';
 import 'package:phase5_project/screens/CheckoutScreen/checkout_screen.dart';
+import 'package:phase5_project/screens/FavoritesScreen/favorites_screen.dart';
 
 class EventScreen extends StatelessWidget {
   final String vibe;
@@ -152,7 +153,13 @@ class EventScreen extends StatelessWidget {
         ],
         onTap: (int index) {
           // Handle taps on the bottom navigation bar items
-          if (index == 1) {
+          if (index == 0) {
+            // If the favorites icon is tapped (index 0), navigate to FavoritesScreen
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => FavoritesScreen()),
+            );
+          } else if (index == 1) {
             // If the home icon is tapped (index 1), navigate to HomeScreen
             Navigator.pushReplacement(
               context,

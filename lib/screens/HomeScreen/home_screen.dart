@@ -4,6 +4,7 @@ import 'package:http/http.dart' as http;
 import 'package:phase5_project/screens/EventScreen/event_screen.dart';
 import 'package:phase5_project/screens/LoginScreen/login_screen.dart';
 import 'package:phase5_project/screens/CreateScreen/create_screen.dart';
+import 'package:phase5_project/screens/FavoritesScreen/favorites_screen.dart'; // Import FavoritesScreen
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -17,6 +18,7 @@ class _HomeScreenState extends State<HomeScreen> {
   var data;
   String output = 'Initial Output';
   String errorMessage = '';
+  Map<String, bool> favorites = {};
 
   Future<String> fetchData(String url) async {
     try {
@@ -149,7 +151,13 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
         onTap: (int index) {
           // Handle taps on the bottom navigation bar items
-          if (index == 1) {
+          if (index == 0) {
+            // If the favorites icon is tapped (index 0), navigate to FavoritesScreen
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => FavoritesScreen()),
+            );
+          } else if (index == 1) {
             // If the home icon is tapped (index 1), navigate to HomeScreen
             Navigator.pushReplacement(
               context,
@@ -162,11 +170,36 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildEventItem(String eventName, String imagePath) {
+    bool isFavorite = favorites[eventName] ?? false;
     return GestureDetector(
       onTap: () => navigateToEvent(eventName, context),
-      child: Container(
-        margin: const EdgeInsets.all(8.0),
-        child: Image.asset(imagePath),
+      child: Stack(
+        children: [
+          Container(
+            margin: const EdgeInsets.all(8.0),
+            child: Image.asset(imagePath),
+          ),
+          Positioned(
+            top: 8.0,
+            right: 8.0,
+            child: IconButton(
+              icon: Icon(
+                isFavorite ? Icons.favorite : Icons.favorite_border,
+                color: isFavorite ? Colors.red : null,
+              ),
+              onPressed: () {
+                setState(() {
+                  favorites[eventName] = !isFavorite;
+                });
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                      content: Text(
+                          '$eventName ${isFavorite ? 'removed from' : 'added to'} favorites!')),
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
