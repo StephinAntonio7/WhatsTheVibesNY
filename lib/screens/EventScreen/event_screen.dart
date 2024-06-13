@@ -3,7 +3,18 @@ import 'package:phase5_project/screens/HomeScreen/home_screen.dart';
 import 'package:phase5_project/screens/CheckoutScreen/checkout_screen.dart';
 
 class EventScreen extends StatelessWidget {
-  const EventScreen({Key? key}) : super(key: key);
+  final String vibe;
+  final String timeDate;
+  final String location;
+  final String ticketPrice;
+
+  const EventScreen({
+    Key? key,
+    required this.vibe,
+    required this.timeDate,
+    required this.location,
+    required this.ticketPrice,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +60,7 @@ class EventScreen extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Text("Chill"),
+                Text(vibe),
                 SizedBox(height: 10),
                 Text(
                   "Time & Date:",
@@ -58,7 +69,7 @@ class EventScreen extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Text("7:00 PM - 10:00 PM, Friday, 24th June"),
+                Text(timeDate),
                 SizedBox(height: 10),
                 Text(
                   "Location:",
@@ -67,7 +78,7 @@ class EventScreen extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Text("ABC Club, 123 Main Street"),
+                Text(location),
                 SizedBox(height: 10),
                 Text(
                   "Ticket Price:",
@@ -76,7 +87,7 @@ class EventScreen extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Text("\$30"),
+                Text(ticketPrice),
               ],
             ),
           ),
@@ -145,7 +156,7 @@ class EventScreen extends StatelessWidget {
             // If the home icon is tapped (index 1), navigate to HomeScreen
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => HomeScreen()),
+              MaterialPageRoute(builder: (context) => const HomeScreen()),
             );
           }
         },

@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:phase5_project/screens/CreateScreen/create_screen.dart';
 import 'package:phase5_project/screens/EventScreen/event_screen.dart';
 import 'package:phase5_project/screens/LoginScreen/login_screen.dart';
+import 'package:phase5_project/screens/CreateScreen/create_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -94,32 +94,30 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Text(output),
                 if (errorMessage.isNotEmpty)
-                  Text(errorMessage, style: TextStyle(color: Colors.red)),
+                  Text(errorMessage, style: const TextStyle(color: Colors.red)),
               ],
             ),
           ),
-          // Gridview of images
+          // GridView of images
           Expanded(
             child: GridView.count(
               crossAxisCount: 1, // Set to 1 for a single column
-              children: List.generate(10, (index) {
-                return GestureDetector(
-                  onTap: () {
-                    // Navigate to EventScreen when the grid item is tapped
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => EventScreen()),
-                    );
-                  },
-                  child: Container(
-                    margin: const EdgeInsets.all(8.0),
-                    color: Colors.grey,
-                  ),
-                );
-              }),
+              children: [
+                _buildEventItem(
+                  'No Type Part III',
+                  'assets/images/No Type Part III.JPEG',
+                ),
+                _buildEventItem(
+                  'Brunch Party',
+                  'assets/images/Brunch Party.jpg',
+                ),
+                _buildEventItem(
+                  '1 Motif Party',
+                  'assets/images/1 Motif Party.jpeg',
+                ),
+              ],
             ),
           ),
-          // "Host" button at the bottom of the page
           Container(
             padding: const EdgeInsets.all(16.0),
             child: ElevatedButton(
@@ -150,7 +148,9 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
         onTap: (int index) {
+          // Handle taps on the bottom navigation bar items
           if (index == 1) {
+            // If the home icon is tapped (index 1), navigate to HomeScreen
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => const HomeScreen()),
@@ -159,5 +159,42 @@ class _HomeScreenState extends State<HomeScreen> {
         },
       ),
     );
+  }
+
+  Widget _buildEventItem(String eventName, String imagePath) {
+    return GestureDetector(
+      onTap: () => navigateToEvent(eventName, context),
+      child: Container(
+        margin: const EdgeInsets.all(8.0),
+        child: Image.asset(imagePath),
+      ),
+    );
+  }
+
+  void navigateToEvent(String eventName, BuildContext context) async {
+    try {
+      final response = await http
+          .get(Uri.parse('http://127.0.0.1:5555/api/event/$eventName'));
+      if (response.statusCode == 200) {
+        var data = jsonDecode(response.body);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => EventScreen(
+              vibe: data['vibe'],
+              timeDate: data['time_date'],
+              location: data['location'],
+              ticketPrice: data['ticket_price'],
+            ),
+          ),
+        );
+      } else {
+        throw Exception('Failed to load event details');
+      }
+    } catch (e) {
+      setState(() {
+        errorMessage = e.toString();
+      });
+    }
   }
 }
