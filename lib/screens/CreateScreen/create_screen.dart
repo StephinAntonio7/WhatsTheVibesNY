@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:phase5_project/screens/HomeScreen/home_screen.dart';
+import 'package:phase5_project/screens/ProfileScreen/profile_screen.dart';
 
 class CreateScreen extends StatelessWidget {
   static const Color deepPurple = Color.fromARGB(255, 166, 163, 171);
@@ -88,16 +89,29 @@ class CreateScreen extends StatelessWidget {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.email),
-            label: 'Messages',
+            icon: Icon(Icons.person), // Changed icon to user profile icon
+            label: 'Profile', // Changed label to 'Profile'
           ),
         ],
         onTap: (int index) {
-          if (index == 1) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => HomeScreen()),
-            );
+          switch (index) {
+            case 0:
+              // Navigate to Favorites screen (if applicable)
+              break;
+            case 1:
+              // Navigate to HomeScreen
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => HomeScreen()),
+              );
+              break;
+            case 2:
+              // Navigate to ProfileScreen
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => ProfileScreen()),
+              );
+              break;
           }
         },
       ),

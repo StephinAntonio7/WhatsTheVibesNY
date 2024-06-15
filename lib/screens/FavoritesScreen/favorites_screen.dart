@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 // import 'package:phase5_project/screens/EventScreen/event_screen.dart';
 import 'package:phase5_project/screens/HomeScreen/home_screen.dart';
+import 'package:phase5_project/screens/ProfileScreen/profile_screen.dart';
 
 class FavoritesScreen extends StatelessWidget {
   @override
@@ -29,24 +30,29 @@ class FavoritesScreen extends StatelessWidget {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.email),
-            label: 'Messages',
+            icon: Icon(Icons.person), // Changed icon to user profile icon
+            label: 'Profile', // Changed label to 'Profile'
           ),
         ],
         onTap: (int index) {
-          // Handle taps on the bottom navigation bar items
-          if (index == 0) {
-            // If the favorites icon is tapped (index 0), navigate to FavoritesScreen
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => FavoritesScreen()),
-            );
-          } else if (index == 1) {
-            // If the home icon is tapped (index 1), navigate to HomeScreen
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()),
-            );
+          switch (index) {
+            case 0:
+              // Navigate to Favorites screen (if applicable)
+              break;
+            case 1:
+              // Navigate to HomeScreen
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => HomeScreen()),
+              );
+              break;
+            case 2:
+              // Navigate to ProfileScreen
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => ProfileScreen()),
+              );
+              break;
           }
         },
       ),

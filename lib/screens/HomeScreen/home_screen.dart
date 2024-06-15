@@ -4,7 +4,8 @@ import 'package:http/http.dart' as http;
 import 'package:phase5_project/screens/EventScreen/event_screen.dart';
 import 'package:phase5_project/screens/LoginScreen/login_screen.dart';
 import 'package:phase5_project/screens/CreateScreen/create_screen.dart';
-import 'package:phase5_project/screens/FavoritesScreen/favorites_screen.dart'; // Import FavoritesScreen
+import 'package:phase5_project/screens/FavoritesScreen/favorites_screen.dart';
+import 'package:phase5_project/screens/ProfileScreen/profile_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -193,8 +194,8 @@ class _HomeScreenState extends State<HomeScreen> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.email),
-            label: 'Messages',
+            icon: Icon(Icons.person), // Changed icon to user profile icon
+            label: 'Profile', // Changed label to 'Profile'
           ),
         ],
         onTap: (int index) {
@@ -203,10 +204,10 @@ class _HomeScreenState extends State<HomeScreen> {
               context,
               MaterialPageRoute(builder: (context) => FavoritesScreen()),
             );
-          } else if (index == 1) {
+          } else if (index == 2) {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()),
+              MaterialPageRoute(builder: (context) => ProfileScreen()),
             );
           }
         },
