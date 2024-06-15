@@ -19,17 +19,48 @@ class _HomeScreenState extends State<HomeScreen> {
   String output = 'Initial Output';
   String errorMessage = '';
   Map<String, bool> favorites = {};
+  List events = [];
 
-  Future<String> fetchData(String url) async {
+  @override
+  void initState() {
+    super.initState();
+    fetchEvents();
+  }
+
+  Future<void> fetchEvents() async {
     try {
-      final response = await http.get(Uri.parse(url));
+      final response =
+          await http.get(Uri.parse('http://127.0.0.1:5555/api/events'));
       if (response.statusCode == 200) {
-        return response.body;
+        setState(() {
+          events = jsonDecode(response.body);
+        });
       } else {
-        throw Exception('Failed to load data');
+        throw Exception('Failed to load events');
       }
     } catch (e) {
-      throw Exception('Error fetching data: $e');
+      setState(() {
+        errorMessage = e.toString();
+      });
+    }
+  }
+
+  Future<void> postUserEvent(Map<String, dynamic> eventData) async {
+    try {
+      final response = await http.post(
+        Uri.parse('http://127.0.0.1:5555/api/user-event'),
+        headers: {'Content-Type': 'application/json'},
+        body: jsonEncode(eventData),
+      );
+      if (response.statusCode == 200) {
+        // Handle success
+      } else {
+        throw Exception('Failed to post event');
+      }
+    } catch (e) {
+      setState(() {
+        errorMessage = e.toString();
+      });
     }
   }
 
@@ -73,8 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 TextField(
                   onChanged: (value) {
                     setState(() {
-                      url =
-                          'http://127.0.0.1:5555/api?query=' + value.toString();
+                      url = 'http://127.0.0.1:5555/api?query=' + value;
                     });
                   },
                 ),
@@ -100,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-          // GridView of images
+          // GridView of static images
           Expanded(
             child: GridView.count(
               crossAxisCount: 1, // Set to 1 for a single column
@@ -120,6 +150,24 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
+          // GridView of dynamic events
+          if (events.isNotEmpty)
+            Expanded(
+              child: GridView.builder(
+                itemCount: events.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 1,
+                ),
+                itemBuilder: (context, index) {
+                  return _buildEventItem(
+                    events[index]['name'],
+                    events[index]['image'],
+                  );
+                },
+              ),
+            )
+          else
+            const Center(child: Text('No events available')),
           Container(
             padding: const EdgeInsets.all(16.0),
             child: ElevatedButton(
@@ -150,15 +198,12 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
         onTap: (int index) {
-          // Handle taps on the bottom navigation bar items
           if (index == 0) {
-            // If the favorites icon is tapped (index 0), navigate to FavoritesScreen
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => FavoritesScreen()),
             );
           } else if (index == 1) {
-            // If the home icon is tapped (index 1), navigate to HomeScreen
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => const HomeScreen()),
@@ -177,7 +222,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Container(
             margin: const EdgeInsets.all(8.0),
-            child: Image.asset(imagePath),
+            child: Image.asset(imagePath, fit: BoxFit.cover),
           ),
           Positioned(
             top: 8.0,
@@ -193,15 +238,33 @@ class _HomeScreenState extends State<HomeScreen> {
                 });
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                      content: Text(
-                          '$eventName ${isFavorite ? 'removed from' : 'added to'} favorites!')),
+                    content: Text(
+                      '$eventName ${isFavorite ? 'removed from' : 'added to'} favorites!',
+                    ),
+                  ),
                 );
+                // Posting the favorite event to the backend
+                postUserEvent(
+                    {'eventName': eventName, 'isFavorite': !isFavorite});
               },
             ),
           ),
         ],
       ),
     );
+  }
+
+  Future<String> fetchData(String url) async {
+    try {
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        return response.body;
+      } else {
+        throw Exception('Failed to load data');
+      }
+    } catch (e) {
+      throw Exception('Error fetching data: $e');
+    }
   }
 
   void navigateToEvent(String eventName, BuildContext context) async {
@@ -214,10 +277,13 @@ class _HomeScreenState extends State<HomeScreen> {
           context,
           MaterialPageRoute(
             builder: (context) => EventScreen(
+              name: data['name'],
               vibe: data['vibe'],
-              timeDate: data['time_date'],
+              time: data['time'],
+              date: data['date'],
               location: data['location'],
-              ticketPrice: data['ticket_price'],
+              price: data['price'],
+              image: data['image'],
             ),
           ),
         );

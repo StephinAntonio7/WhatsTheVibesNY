@@ -4,17 +4,23 @@ import 'package:phase5_project/screens/CheckoutScreen/checkout_screen.dart';
 import 'package:phase5_project/screens/FavoritesScreen/favorites_screen.dart';
 
 class EventScreen extends StatelessWidget {
+  final String name;
   final String vibe;
-  final String timeDate;
+  final String time;
+  final String date;
   final String location;
-  final String ticketPrice;
+  final String price;
+  final String image;
 
   const EventScreen({
     Key? key,
+    required this.name,
     required this.vibe,
-    required this.timeDate,
+    required this.time,
+    required this.date,
     required this.location,
-    required this.ticketPrice,
+    required this.price,
+    required this.image,
   }) : super(key: key);
 
   @override
@@ -55,6 +61,14 @@ class EventScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
+                  "Name:",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(name),
+                Text(
                   "Vibe:",
                   style: TextStyle(
                     fontSize: 18,
@@ -64,13 +78,21 @@ class EventScreen extends StatelessWidget {
                 Text(vibe),
                 SizedBox(height: 10),
                 Text(
-                  "Time & Date:",
+                  "Time:",
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Text(timeDate),
+                Text(time),
+                Text(
+                  "Date:",
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(date),
                 SizedBox(height: 10),
                 Text(
                   "Location:",
@@ -88,7 +110,7 @@ class EventScreen extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                Text(ticketPrice),
+                Text(price),
               ],
             ),
           ),

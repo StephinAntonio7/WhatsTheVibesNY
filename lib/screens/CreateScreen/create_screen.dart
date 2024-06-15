@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:phase5_project/screens/HomeScreen/home_screen.dart';
 
 class CreateScreen extends StatelessWidget {
@@ -7,70 +9,67 @@ class CreateScreen extends StatelessWidget {
   final TextStyle titleStyle = TextStyle(
     fontSize: 24,
     fontWeight: FontWeight.bold,
-    color:
-        Colors.white, // Change title text color to white for better visibility
+    color: Colors.white,
   );
+
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController vibeController = TextEditingController();
+  final TextEditingController dateController = TextEditingController();
+  final TextEditingController timeController = TextEditingController();
+  final TextEditingController locationController = TextEditingController();
+  final TextEditingController priceController = TextEditingController();
+  final TextEditingController imageController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:
-          Colors.white, // Set background color of Scaffold to white
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text(
-          'Create An Event',
-          style: titleStyle,
-        ),
+        title: Text('Create An Event', style: titleStyle),
         backgroundColor: deepPurple,
       ),
       body: SingleChildScrollView(
-        // Wrap the body with SingleChildScrollView
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Form(
+            key: _formKey,
             child: Column(
               children: [
                 TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Vibe',
-                  ),
+                  controller: nameController,
+                  decoration: InputDecoration(labelText: 'Name'),
                 ),
                 TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Date',
-                  ),
+                  controller: vibeController,
+                  decoration: InputDecoration(labelText: 'Vibe'),
                 ),
                 TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Time',
-                  ),
+                  controller: dateController,
+                  decoration: InputDecoration(labelText: 'Date'),
                 ),
                 TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Location',
-                  ),
+                  controller: timeController,
+                  decoration: InputDecoration(labelText: 'Time'),
                 ),
                 TextFormField(
-                  decoration: InputDecoration(
-                    labelText: 'Ticket Price',
-                  ),
+                  controller: locationController,
+                  decoration: InputDecoration(labelText: 'Location'),
                 ),
-                const SizedBox(height: 20), // Add space here
+                TextFormField(
+                  controller: priceController,
+                  decoration: InputDecoration(labelText: 'Ticket Price'),
+                ),
+                TextFormField(
+                  controller: imageController,
+                  decoration: InputDecoration(labelText: 'Image URL'),
+                ),
+                const SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: () {},
-                  child: Text('Upload Image'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: deepPurple, // Corrected to backgroundColor
-                  ),
-                ),
-                const SizedBox(height: 20), // Add space between buttons
-                ElevatedButton(
-                  onPressed: () {
-                    // Add your post button logic here
-                  },
+                  onPressed: () => postEvent(context),
                   child: Text('Post'),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: deepPurple, // Corrected to backgroundColor
+                    backgroundColor: deepPurple,
                   ),
                 ),
               ],
@@ -94,9 +93,7 @@ class CreateScreen extends StatelessWidget {
           ),
         ],
         onTap: (int index) {
-          // Handle taps on the bottom navigation bar items
           if (index == 1) {
-            // If the home icon is tapped (index 1), navigate to HomeScreen
             Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => HomeScreen()),
@@ -105,5 +102,32 @@ class CreateScreen extends StatelessWidget {
         },
       ),
     );
+  }
+
+  void postEvent(BuildContext context) async {
+    final response = await http.post(
+      Uri.parse('http://127.0.0.1:5555/api/user-event'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'name': nameController.text,
+        'vibe': vibeController.text,
+        'date': dateController.text,
+        'time': timeController.text,
+        'location': locationController.text,
+        'price': priceController.text,
+        'image': imageController.text,
+      }),
+    );
+
+    if (response.statusCode == 201) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to post event')),
+      );
+    }
   }
 }

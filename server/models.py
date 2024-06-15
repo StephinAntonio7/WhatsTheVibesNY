@@ -24,22 +24,31 @@ class User(db.Model, SerializerMixin):
     def __repr__(self):
         return f'User(username={self.username})'
     
-    # TODO Add validations
-    # @validates('username')
-    # def validate_user(self, key, value):
-    #     updated_value = value.strip().replace(' ', '_')
-    #     if updated_value.length() > 4:
-    #         return updated_value
 
 class Event(db.Model, SerializerMixin):
     
     __tablename__ = 'events_table'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
+    vibe = db.Column(db.String)
+    time = db.Column(db.Integer)
+    date = db.Column(db.Integer)
+    location = db.Column(db.String)
+    price = db.Column(db.Integer)
     image = db.Column(db.String)
-    time= db.Column(db.Integer)
-    date= db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey('users_table.id'))
+    
+    # def to_dict(self):
+    #     return {
+    #         'id': self.id,
+    #         'name': self.name,
+    #         'vibe': self.vibe,
+    #         'time': self.time,
+    #         'date': self.date,
+    #         'location': self.location,
+    #         'price': self.price,
+    #         'image': self.image
+    #     }
     
     user = db.relationship('User', back_populates='events')
     
