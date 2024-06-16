@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:phase5_project/screens/HomeScreen/home_screen.dart';
+import 'package:phase5_project/screens/FavoritesScreen/favorites_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -23,7 +25,7 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 SizedBox(width: 16),
                 Text(
-                  'Stephin R',
+                  'Stephin Roberts',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -83,6 +85,46 @@ class ProfileScreen extends StatelessWidget {
             ),
           ),
         ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.favorite),
+            label: 'Favorites',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person), // Changed icon to user profile icon
+            label: 'Profile', // Changed label to 'Profile'
+          ),
+        ],
+        onTap: (int index) {
+          switch (index) {
+            case 0:
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => FavoritesScreen()),
+              );
+              break;
+            case 1:
+              // Navigate to HomeScreen
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => HomeScreen()),
+              );
+              break;
+            case 2:
+              // Navigate to ProfileScreen
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => ProfileScreen()),
+              );
+              break;
+          }
+        },
       ),
     );
   }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:phase5_project/screens/HomeScreen/home_screen.dart';
 import 'package:phase5_project/screens/ProfileScreen/profile_screen.dart';
+import 'package:phase5_project/screens/FavoritesScreen/favorites_screen.dart';
 
 class CreateScreen extends StatelessWidget {
   static const Color deepPurple = Color.fromARGB(255, 166, 163, 171);
@@ -96,7 +97,10 @@ class CreateScreen extends StatelessWidget {
         onTap: (int index) {
           switch (index) {
             case 0:
-              // Navigate to Favorites screen (if applicable)
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => FavoritesScreen()),
+              );
               break;
             case 1:
               // Navigate to HomeScreen
