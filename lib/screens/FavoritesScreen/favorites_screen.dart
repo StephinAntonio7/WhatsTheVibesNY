@@ -13,10 +13,10 @@ class FavoritesScreen extends StatelessWidget {
       body: GridView.count(
         crossAxisCount: 2,
         children: [
-          _buildBlock('Block 1', Colors.grey),
-          _buildBlock('Block 2', Colors.grey),
-          _buildBlock('Block 3', Colors.grey),
-          _buildBlock('Block 4', Colors.grey),
+          _buildBlock('', Colors.grey),
+          _buildBlock('', Colors.grey),
+          _buildBlock('', Colors.grey),
+          _buildBlock('', Colors.grey),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

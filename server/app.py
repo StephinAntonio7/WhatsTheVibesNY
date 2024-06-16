@@ -96,13 +96,24 @@ def post_user_event():
     db.session.commit()
     return event.to_dict(), 201
 
-@app.route('/api', methods = ['GET'])
-def returnascii():
-    d= {}
-    inputchr = str(request.args['query'])
-    answer = str(ord(inputchr))
-    d['output'] = answer
-    return d
+# GET events by vibe
+@app.route('/api/events', methods=['GET'])
+def get_events():
+    search = request.args.get('search')
+    if search:
+        events = Event.query.filter(Event.vibe.ilike(f'%{search}%')).all()
+    else:
+        events = Event.query.all()
+    return jsonify([event.to_dict() for event in events]), 200
+
+    
+# @app.route('/api', methods = ['GET'])
+# def returnascii():
+#     d= {}
+#     inputchr = str(request.args['query'])
+#     answer = str(ord(inputchr))
+#     d['output'] = answer
+#     return d
     
 if __name__ =="__main__":
     app.run(port=5555, debug=True)

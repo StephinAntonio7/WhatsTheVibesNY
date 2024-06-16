@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:phase5_project/screens/HomeScreen/home_screen.dart';
 import 'package:phase5_project/screens/ConfirmationScreen/confirmation_screen.dart';
+import 'package:phase5_project/screens/ProfileScreen/profile_screen.dart';
+import 'package:phase5_project/screens/FavoritesScreen/favorites_screen.dart';
 
 class CheckoutScreen extends StatefulWidget {
   const CheckoutScreen({Key? key}) : super(key: key);
@@ -150,18 +152,32 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.email),
-            label: 'Messages',
+            icon: Icon(Icons.person), // Changed icon to user profile icon
+            label: 'Profile', // Changed label to 'Profile'
           ),
         ],
         onTap: (int index) {
-          // Handle taps on the bottom navigation bar items
-          if (index == 1) {
-            // If the home icon is tapped (index 1), navigate to HomeScreen
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => HomeScreen()),
-            );
+          switch (index) {
+            case 0:
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => FavoritesScreen()),
+              );
+              break;
+            case 1:
+              // Navigate to HomeScreen
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => HomeScreen()),
+              );
+              break;
+            case 2:
+              // Navigate to ProfileScreen
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => ProfileScreen()),
+              );
+              break;
           }
         },
       ),

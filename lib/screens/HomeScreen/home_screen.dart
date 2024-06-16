@@ -17,10 +17,12 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   String url = '';
   var data;
-  String output = 'Initial Output';
+  String output = '';
   String errorMessage = '';
   Map<String, bool> favorites = {};
   List events = [];
+  List searchResults = [];
+  TextEditingController searchController = TextEditingController();
 
   @override
   void initState() {
@@ -37,7 +39,37 @@ class _HomeScreenState extends State<HomeScreen> {
           events = jsonDecode(response.body);
         });
       } else {
-        throw Exception('Failed to load events');
+        setState(() {
+          errorMessage = 'Failed to load events';
+        });
+      }
+    } catch (e) {
+      setState(() {
+        errorMessage = e.toString();
+      });
+    }
+  }
+
+  Future<void> searchEvents(String keyword) async {
+    setState(() {
+      output = 'Searching...';
+    });
+
+    try {
+      final response = await http
+          .get(Uri.parse('http://127.0.0.1:5555/api/events?search=$keyword'));
+      if (response.statusCode == 200) {
+        setState(() {
+          searchResults = (jsonDecode(response.body) as List).where((event) {
+            return event['vibe'].toLowerCase().contains(keyword.toLowerCase());
+          }).toList();
+          output =
+              'Search results for "$keyword": ${searchResults.length} events found';
+        });
+      } else {
+        setState(() {
+          errorMessage = 'Failed to search events';
+        });
       }
     } catch (e) {
       setState(() {
@@ -48,16 +80,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<void> postUserEvent(Map<String, dynamic> eventData) async {
     try {
-      final response = await http.post(
+      await http.post(
         Uri.parse('http://127.0.0.1:5555/api/user-event'),
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode(eventData),
       );
-      if (response.statusCode == 200) {
-        // Handle success
-      } else {
-        throw Exception('Failed to post event');
-      }
     } catch (e) {
       setState(() {
         errorMessage = e.toString();
@@ -92,83 +119,72 @@ class _HomeScreenState extends State<HomeScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: const <Widget>[
                 Text(
-                  'Hello, User',
+                  'Hello, Stephin',
                   style: TextStyle(fontSize: 18.0),
                 ),
               ],
             ),
           ),
-          // TextField and Fetch Button
-          Center(
-            child: Column(
+          // TextField and Search Button
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
               children: [
-                TextField(
-                  onChanged: (value) {
-                    setState(() {
-                      url = 'http://127.0.0.1:5555/api?query=' + value;
-                    });
-                  },
+                Expanded(
+                  child: TextField(
+                    controller: searchController,
+                    decoration: InputDecoration(
+                      hintText: 'Enter keywords to search events...',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
                 ),
-                TextButton(
-                  onPressed: () async {
-                    try {
-                      data = await fetchData(url);
-                      var decoded = jsonDecode(data);
-                      setState(() {
-                        output = decoded['output'];
-                      });
-                    } catch (e) {
-                      setState(() {
-                        errorMessage = e.toString();
-                      });
+                SizedBox(width: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    String keyword = searchController.text.trim();
+                    if (keyword.isNotEmpty) {
+                      searchEvents(keyword);
                     }
                   },
-                  child: const Text('Fetch ASCII Value'),
+                  child: Text('Search'),
                 ),
-                Text(output),
-                if (errorMessage.isNotEmpty)
-                  Text(errorMessage, style: const TextStyle(color: Colors.red)),
               ],
             ),
           ),
-          // GridView of static images
+          Text(output),
+          if (errorMessage.isNotEmpty)
+            Text(errorMessage, style: const TextStyle(color: Colors.red)),
+          // Display either static images or search results
           Expanded(
-            child: GridView.count(
-              crossAxisCount: 1, // Set to 1 for a single column
-              children: [
-                _buildEventItem(
-                  'No Type Part III',
-                  'assets/images/No Type Part III.JPEG',
-                ),
-                _buildEventItem(
-                  'Brunch Party',
-                  'assets/images/Brunch Party.jpg',
-                ),
-                _buildEventItem(
-                  '1 Motif Party',
-                  'assets/images/1 Motif Party.jpeg',
-                ),
-              ],
-            ),
+            child: searchResults.isEmpty
+                ? GridView.count(
+                    crossAxisCount: 1, // Set to 1 for a single column
+                    children: [
+                      _buildEventItem(
+                        'No Type Part III',
+                        'assets/images/No Type Part III.JPEG',
+                      ),
+                      _buildEventItem(
+                        'Brunch Party',
+                        'assets/images/Brunch Party.jpg',
+                      ),
+                      _buildEventItem(
+                        '1 Motif Party',
+                        'assets/images/1 Motif Party.jpeg',
+                      ),
+                    ],
+                  )
+                : ListView.builder(
+                    itemCount: searchResults.length,
+                    itemBuilder: (context, index) {
+                      return _buildEventItem(
+                        searchResults[index]['name'],
+                        searchResults[index]['image'],
+                      );
+                    },
+                  ),
           ),
-          // GridView of dynamic events
-          if (events.isNotEmpty)
-            Expanded(
-              child: GridView.builder(
-                itemCount: events.length,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 1,
-                ),
-                itemBuilder: (context, index) {
-                  return _buildEventItem(
-                    events[index]['name'],
-                    events[index]['image'],
-                  );
-                },
-              ),
-            )
-          else
-            const Center(child: Text('No events available')),
           Container(
             padding: const EdgeInsets.all(16.0),
             child: ElevatedButton(
@@ -204,10 +220,15 @@ class _HomeScreenState extends State<HomeScreen> {
               context,
               MaterialPageRoute(builder: (context) => FavoritesScreen()),
             );
+          } else if (index == 1) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const HomeScreen()),
+            );
           } else if (index == 2) {
             Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => ProfileScreen()),
+              MaterialPageRoute(builder: (context) => const ProfileScreen()),
             );
           }
         },
@@ -255,19 +276,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Future<String> fetchData(String url) async {
-    try {
-      final response = await http.get(Uri.parse(url));
-      if (response.statusCode == 200) {
-        return response.body;
-      } else {
-        throw Exception('Failed to load data');
-      }
-    } catch (e) {
-      throw Exception('Error fetching data: $e');
-    }
-  }
-
   void navigateToEvent(String eventName, BuildContext context) async {
     try {
       final response = await http
@@ -289,7 +297,9 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         );
       } else {
-        throw Exception('Failed to load event details');
+        setState(() {
+          errorMessage = 'Failed to load event details';
+        });
       }
     } catch (e) {
       setState(() {
