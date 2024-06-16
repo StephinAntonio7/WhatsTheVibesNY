@@ -6,6 +6,7 @@ import 'package:phase5_project/screens/LoginScreen/login_screen.dart';
 import 'package:phase5_project/screens/CreateScreen/create_screen.dart';
 import 'package:phase5_project/screens/FavoritesScreen/favorites_screen.dart';
 import 'package:phase5_project/screens/ProfileScreen/profile_screen.dart';
+import 'package:phase5_project/screens/FavoritesScreen/favorites_state.dart'; // Import the shared state
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -19,7 +20,6 @@ class _HomeScreenState extends State<HomeScreen> {
   var data;
   String output = '';
   String errorMessage = '';
-  Map<String, bool> favorites = {};
   List events = [];
   List searchResults = [];
   TextEditingController searchController = TextEditingController();
@@ -71,20 +71,6 @@ class _HomeScreenState extends State<HomeScreen> {
           errorMessage = 'Failed to search events';
         });
       }
-    } catch (e) {
-      setState(() {
-        errorMessage = e.toString();
-      });
-    }
-  }
-
-  Future<void> postUserEvent(Map<String, dynamic> eventData) async {
-    try {
-      await http.post(
-        Uri.parse('http://127.0.0.1:5555/api/user-event'),
-        headers: {'Content-Type': 'application/json'},
-        body: jsonEncode(eventData),
-      );
     } catch (e) {
       setState(() {
         errorMessage = e.toString();
@@ -181,6 +167,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       return _buildEventItem(
                         searchResults[index]['name'],
                         searchResults[index]['image'],
+                        searchResults[index],
                       );
                     },
                   ),
@@ -236,8 +223,9 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildEventItem(String eventName, String imagePath) {
-    bool isFavorite = favorites[eventName] ?? false;
+  Widget _buildEventItem(String eventName, String imagePath,
+      [Map<String, dynamic>? eventDetails]) {
+    bool isFavorite = favoritesState.favorites.containsKey(eventName);
     return GestureDetector(
       onTap: () => navigateToEvent(eventName, context),
       child: Stack(
@@ -256,7 +244,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               onPressed: () {
                 setState(() {
-                  favorites[eventName] = !isFavorite;
+                  favoritesState.toggleFavorite(eventName, eventDetails ?? {});
                 });
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
@@ -265,9 +253,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 );
-                // Posting the favorite event to the backend
-                postUserEvent(
-                    {'eventName': eventName, 'isFavorite': !isFavorite});
               },
             ),
           ),
