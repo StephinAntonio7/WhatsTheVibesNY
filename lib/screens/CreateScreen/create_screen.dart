@@ -138,10 +138,16 @@ class CreateScreen extends StatelessWidget {
     );
 
     if (response.statusCode == 201) {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
-      );
+      final newEvent = {
+        'name': nameController.text,
+        'vibe': vibeController.text,
+        'date': dateController.text,
+        'time': timeController.text,
+        'location': locationController.text,
+        'price': priceController.text,
+        'image': imageController.text,
+      };
+      Navigator.pop(context, newEvent);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Failed to post event')),

@@ -50,15 +50,60 @@ class FavoritesScreen extends StatelessWidget {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      eventDetails['image'] != null
+                          ? eventDetails['image'].startsWith('assets')
+                              ? Image.asset(
+                                  eventDetails['image'],
+                                  height: 100,
+                                  width: double.infinity,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (BuildContext context,
+                                      Object exception,
+                                      StackTrace? stackTrace) {
+                                    return Container(
+                                      height: 100,
+                                      color: Colors.grey,
+                                      child: Icon(
+                                        Icons.broken_image,
+                                        color: Colors.white,
+                                      ),
+                                    );
+                                  },
+                                )
+                              : Image.network(
+                                  eventDetails['image'],
+                                  height: 100,
+                                  width: double.infinity,
+                                  fit: BoxFit.cover,
+                                  errorBuilder: (BuildContext context,
+                                      Object exception,
+                                      StackTrace? stackTrace) {
+                                    return Container(
+                                      height: 100,
+                                      color: Colors.grey,
+                                      child: Icon(
+                                        Icons.broken_image,
+                                        color: Colors.white,
+                                      ),
+                                    );
+                                  },
+                                )
+                          : Container(
+                              height: 100,
+                              color: Colors.grey,
+                              child: Icon(
+                                Icons.image,
+                                color: Colors.white,
+                              ),
+                            ),
+                      SizedBox(height: 8),
                       Text(
-                        eventName,
+                        eventDetails['name'] ?? '',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(height: 8),
-                      Text(eventDetails['vibe'] ?? ''),
                       IconButton(
                         icon: Icon(Icons.remove_circle_outline),
                         onPressed: () {

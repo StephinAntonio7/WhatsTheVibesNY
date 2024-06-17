@@ -141,45 +141,42 @@ class _HomeScreenState extends State<HomeScreen> {
           Text(output),
           if (errorMessage.isNotEmpty)
             Text(errorMessage, style: const TextStyle(color: Colors.red)),
-          // Display either static images or search results
+          // Display search results if any, else display all events
           Expanded(
-            child: searchResults.isEmpty
-                ? GridView.count(
-                    crossAxisCount: 1, // Set to 1 for a single column
-                    children: [
-                      _buildEventItem(
-                        'No Type Part III',
-                        'assets/images/No Type Part III.JPEG',
-                      ),
-                      _buildEventItem(
-                        'Brunch Party',
-                        'assets/images/Brunch Party.jpg',
-                      ),
-                      _buildEventItem(
-                        '1 Motif Party',
-                        'assets/images/1 Motif Party.jpeg',
-                      ),
-                    ],
-                  )
-                : ListView.builder(
-                    itemCount: searchResults.length,
-                    itemBuilder: (context, index) {
-                      return _buildEventItem(
-                        searchResults[index]['name'],
-                        searchResults[index]['image'],
-                        searchResults[index],
-                      );
-                    },
-                  ),
+            child: GridView.builder(
+              padding: const EdgeInsets.all(16.0),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 1, // Number of columns
+                crossAxisSpacing: 16.0, // Horizontal space between items
+                mainAxisSpacing: 16.0, // Vertical space between items
+              ),
+              itemCount: searchResults.isNotEmpty
+                  ? searchResults.length
+                  : events.length,
+              itemBuilder: (context, index) {
+                var event = searchResults.isNotEmpty
+                    ? searchResults[index]
+                    : events[index];
+                String eventName = event['name'];
+                String imagePath = event['image'];
+                return _buildEventItem(eventName, imagePath, event);
+              },
+            ),
           ),
-          Container(
+          // Host Event Button
+          Padding(
             padding: const EdgeInsets.all(16.0),
             child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
+              onPressed: () async {
+                final newEvent = await Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => CreateScreen()),
                 );
+                if (newEvent != null) {
+                  setState(() {
+                    events.add(newEvent);
+                  });
+                }
               },
               child: const Text('Host'),
             ),
@@ -232,7 +229,37 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           Container(
             margin: const EdgeInsets.all(8.0),
-            child: Image.asset(imagePath, fit: BoxFit.cover),
+            child: imagePath.startsWith('assets')
+                ? Image.asset(
+                    imagePath,
+                    fit: BoxFit.cover,
+                    errorBuilder: (BuildContext context, Object exception,
+                        StackTrace? stackTrace) {
+                      return Container(
+                        height: 100,
+                        color: Colors.grey,
+                        child: Icon(
+                          Icons.broken_image,
+                          color: Colors.white,
+                        ),
+                      );
+                    },
+                  )
+                : Image.network(
+                    imagePath,
+                    fit: BoxFit.cover,
+                    errorBuilder: (BuildContext context, Object exception,
+                        StackTrace? stackTrace) {
+                      return Container(
+                        height: 100,
+                        color: Colors.grey,
+                        child: Icon(
+                          Icons.broken_image,
+                          color: Colors.white,
+                        ),
+                      );
+                    },
+                  ),
           ),
           Positioned(
             top: 8.0,
