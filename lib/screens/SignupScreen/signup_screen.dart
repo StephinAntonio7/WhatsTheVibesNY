@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:phase5_project/screens/LoginScreen/login_screen.dart';
-// import 'package:intl/intl.dart';
+import 'package:phase5_project/screens/HomeScreen/home_screen.dart';
 
 class SignupScreen extends StatefulWidget {
   @override
@@ -15,6 +18,8 @@ class _SignupScreenState extends State<SignupScreen> {
   final _dobController = TextEditingController();
   final _genderController = TextEditingController();
   final _passwordController = TextEditingController();
+
+  final _storage = FlutterSecureStorage();
 
   @override
   void initState() {
@@ -30,6 +35,44 @@ class _SignupScreenState extends State<SignupScreen> {
     _genderController.dispose();
     _passwordController.dispose();
     super.dispose();
+  }
+
+  Future<void> signUp() async {
+    if (_formKey.currentState!.validate()) {
+      try {
+        final response = await http.post(
+          Uri.parse(
+              'http://127.0.0.1:5555/api/users'), // Replace with your API endpoint
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(<String, String>{
+            'username': _emailController.text.trim(),
+            'password': _passwordController.text.trim(),
+          }),
+        );
+
+        if (response.statusCode == 201) {
+          final responseData = jsonDecode(response.body);
+          final authToken = responseData['auth_token'];
+
+          // Store the auth token securely
+          await _storage.write(key: 'authToken', value: authToken);
+
+          // Navigate to HomeScreen after successful signup
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => HomeScreen()),
+          );
+        } else {
+          // Handle errors based on response status code
+          print('Signup failed with status ${response.statusCode}');
+        }
+      } catch (e) {
+        // Handle other errors such as network errors
+        print('Error signing up: $e');
+      }
+    }
   }
 
   @override
@@ -164,12 +207,7 @@ class _SignupScreenState extends State<SignupScreen> {
               SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: ElevatedButton(
-                  onPressed: () {
-                    if (_formKey.currentState!.validate()) {
-                      // TODO: Implement sign up functionality
-                      print('Signed up successfully');
-                    }
-                  },
+                  onPressed: signUp,
                   child: Text('Sign Up'),
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.amber),
@@ -188,11 +226,9 @@ class _SignupScreenState extends State<SignupScreen> {
                   GestureDetector(
                     onTap: () {
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  LoginScreen())); //MaterialPageRoute
-                      print('Sign in');
+                        context,
+                        MaterialPageRoute(builder: (context) => LoginScreen()),
+                      );
                     },
                     child: Text(
                       'Sign In',

@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:phase5_project/screens/HomeScreen/home_screen.dart'; // Import HomeScreen
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:phase5_project/screens/HomeScreen/home_screen.dart';
 import 'package:phase5_project/screens/SignupScreen/signup_screen.dart';
 
 class LoginScreen extends StatelessWidget {
+  final storage = FlutterSecureStorage();
+
   LinearGradient get gradient => LinearGradient(
         begin: Alignment.topCenter,
         end: Alignment.bottomCenter,
@@ -11,6 +16,9 @@ class LoginScreen extends StatelessWidget {
           Color.fromARGB(255, 23, 126, 95),
         ],
       );
+
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -31,19 +39,21 @@ class LoginScreen extends StatelessWidget {
                 Text(
                   'Login',
                   style: TextStyle(
-                    color: Colors.white, // Changed the font color to white
+                    color: Colors.white,
                     fontSize: 30.0,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 SizedBox(height: 20.0),
                 TextField(
+                  controller: emailController,
                   decoration: InputDecoration(
                     labelText: 'Email',
                   ),
                 ),
                 SizedBox(height: 20.0),
                 TextField(
+                  controller: passwordController,
                   obscureText: true,
                   decoration: InputDecoration(
                     labelText: 'Password',
@@ -61,12 +71,45 @@ class LoginScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 20.0),
                 ElevatedButton(
-                  onPressed: () {
-                    // Navigate to HomeScreen when login button is pressed
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => HomeScreen()),
-                    );
+                  onPressed: () async {
+                    final email = emailController.text;
+                    final password = passwordController.text;
+
+                    try {
+                      final response = await http.post(
+                        Uri.parse('http://127.0.0.1:5555/api/login'),
+                        headers: {'Content-Type': 'application/json'},
+                        body: jsonEncode({
+                          'email': email,
+                          'password': password,
+                        }),
+                      );
+
+                      if (response.statusCode == 200) {
+                        final Map<String, dynamic> data =
+                            jsonDecode(response.body);
+                        final String token = data['token'];
+
+                        await storage.write(key: 'authToken', value: token);
+
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => HomeScreen()),
+                        );
+                      } else {
+                        final Map<String, dynamic> errorData =
+                            jsonDecode(response.body);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                              content:
+                                  Text('Login failed: ${errorData['error']}')),
+                        );
+                      }
+                    } catch (e) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Error: $e')),
+                      );
+                    }
                   },
                   child: Text('Login'),
                   style: ElevatedButton.styleFrom(
@@ -79,7 +122,15 @@ class LoginScreen extends StatelessWidget {
                 Align(
                   alignment: Alignment.center,
                   child: TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              HomeScreen(), // Navigate to Forgot Password Screen
+                        ),
+                      );
+                    },
                     child: Text('Forgot Password?'),
                   ),
                 ),
@@ -95,7 +146,6 @@ class LoginScreen extends StatelessWidget {
                           MaterialPageRoute(
                               builder: (context) => SignupScreen()),
                         );
-                        print('Sign up');
                       },
                       child: Text('Sign Up'),
                     ),

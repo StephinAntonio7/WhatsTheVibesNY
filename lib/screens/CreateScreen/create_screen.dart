@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:phase5_project/screens/HomeScreen/home_screen.dart';
 import 'package:phase5_project/screens/ProfileScreen/profile_screen.dart';
@@ -8,6 +9,8 @@ import 'package:phase5_project/screens/FavoritesScreen/favorites_screen.dart';
 class CreateScreen extends StatelessWidget {
   static const Color deepPurple = Color.fromARGB(255, 166, 163, 171);
 
+  final storage = FlutterSecureStorage(); // Initialize secure storage
+
   final TextStyle titleStyle = TextStyle(
     fontSize: 24,
     fontWeight: FontWeight.bold,
@@ -15,6 +18,7 @@ class CreateScreen extends StatelessWidget {
   );
 
   final _formKey = GlobalKey<FormState>();
+
   final TextEditingController nameController = TextEditingController();
   final TextEditingController vibeController = TextEditingController();
   final TextEditingController dateController = TextEditingController();
@@ -90,8 +94,8 @@ class CreateScreen extends StatelessWidget {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person), // Changed icon to user profile icon
-            label: 'Profile', // Changed label to 'Profile'
+            icon: Icon(Icons.person),
+            label: 'Profile',
           ),
         ],
         onTap: (int index) {
@@ -103,14 +107,12 @@ class CreateScreen extends StatelessWidget {
               );
               break;
             case 1:
-              // Navigate to HomeScreen
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (context) => HomeScreen()),
               );
               break;
             case 2:
-              // Navigate to ProfileScreen
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (context) => ProfileScreen()),
@@ -123,9 +125,26 @@ class CreateScreen extends StatelessWidget {
   }
 
   void postEvent(BuildContext context) async {
+    String? authToken;
+    try {
+      authToken = await storage.read(key: 'authToken'); // Read the token
+    } catch (e) {
+      print('Error reading authToken: $e');
+    }
+
+    if (authToken == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Authentication token not found')),
+      );
+      return;
+    }
+
     final response = await http.post(
       Uri.parse('http://127.0.0.1:5555/api/user-event'),
-      headers: {'Content-Type': 'application/json'},
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $authToken', // Include the token in headers
+      },
       body: jsonEncode({
         'name': nameController.text,
         'vibe': vibeController.text,
@@ -137,17 +156,14 @@ class CreateScreen extends StatelessWidget {
       }),
     );
 
-    if (response.statusCode == 201) {
-      final newEvent = {
-        'name': nameController.text,
-        'vibe': vibeController.text,
-        'date': dateController.text,
-        'time': timeController.text,
-        'location': locationController.text,
-        'price': priceController.text,
-        'image': imageController.text,
-      };
-      Navigator.pop(context, newEvent);
+    if (response.statusCode == 200) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Event posted successfully!')),
+      );
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => HomeScreen()),
+      );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Failed to post event')),

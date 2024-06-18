@@ -1,5 +1,5 @@
-from app import app
-from models import db, User, Event
+from app import app, db
+from models import Event
 
 with app.app_context():
     print("Seeding database...")
