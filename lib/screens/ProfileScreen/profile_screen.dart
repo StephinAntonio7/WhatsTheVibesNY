@@ -50,10 +50,10 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 8),
                 EventCard(
-                  vibe: 'Chill',
-                  time: '8:00 PM',
-                  date: 'March 12, 2023',
-                  location: 'The Venue',
+                  vibe: 'Everyday People',
+                  time: '5:00 PM',
+                  date: 'July 14th, 2024',
+                  location: 'Elsewhere',
                   purchased: true,
                 ),
               ],
@@ -75,10 +75,10 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 8),
                 EventCard(
-                  vibe: 'Hype',
-                  time: '7:00 PM',
-                  date: 'February 22, 2023',
-                  location: 'The Arena',
+                  vibe: 'The Lay Out',
+                  time: '1:00 PM',
+                  date: 'June 16th, 2024',
+                  location: 'Fort Greene Park',
                   purchased: false,
                 ),
               ],
@@ -177,7 +177,7 @@ class EventCard extends StatelessWidget {
               ),
               Spacer(),
               Text(
-                purchased ? 'Ticket Purchased' : 'Ticket Not Purchased',
+                purchased ? 'Ticket Purchased' : '',
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,
