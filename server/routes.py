@@ -77,4 +77,10 @@ def get_events():
         events = Event.query.all()
     return jsonify([event.to_dict() for event in events]), 200
 
-# Add more routes as needed
+@routes_bp.route('/api/event/<event_name>', methods=['GET'])
+def get_event_by_name(event_name):
+    event = Event.query.filter_by(name=event_name).first()
+    if event:
+        return jsonify(event.to_dict()), 200
+    else:
+        return jsonify({'error': 'Event not found'}), 404
