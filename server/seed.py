@@ -12,7 +12,7 @@ with app.app_context():
         vibe='Hip-Hop' '/' 'R&B' '/' 'Afrobeats',
         time='4:00 PM - 9:00 PM',
         date='Saturday, June 1st',
-        location='90 Scott Ave',
+        location='90 Scott Ave' ',' ' Brooklyn' ',' ' NY',
         price='$20',
         image='assets/images/No Type Part III.JPEG'
     )
@@ -21,9 +21,9 @@ with app.app_context():
     e2 = Event(
         name='Brunch Party',
         vibe='Hip-Hop' '/' 'R&B' '/' 'Day Party' '/' 'Dancehall',
-        time='8:00 PM - 11:00 PM',
-        date='Friday, July 2nd',
-        location='789 Oak St',
+        time='1:00 PM - 8:00 PM',
+        date='Sunday, June 9th',
+        location='128 Metropolitan Ave' ',' ' Brooklyn' ',' ' NY',
         price='$30',
         image='assets/images/Brunch Party.jpg'
     )
@@ -32,9 +32,9 @@ with app.app_context():
     e3 = Event(
         name='1 Motif Party',
         vibe='Hip-Hop' '/' 'R&B' '/' 'Afrobeats',
-        time='9:00 PM - 1:00 AM',
+        time='9:00 PM - 3:00 AM',
         date='Friday, July 1st',
-        location='456 Elm St',
+        location='The Sultan Room' ',' ' Brooklyn' ',' ' NY',
         price='$25',
         image='assets/images/1 Motif Party.jpeg'
     )
@@ -45,7 +45,7 @@ with app.app_context():
         vibe='Hip-Hop' '/' 'R&B',
         time='9:00 PM - 1:00 AM',
         date='Thursday, June 6th',
-        location='50 Bowery',
+        location='50 Bowery' ',' ' New York' ',' ' NY',
         price='$25',
         image='assets/images/First Thursdays.png'
     )
@@ -56,7 +56,7 @@ with app.app_context():
         vibe='Hip-Hop' '/' 'R&B',
         time='9:00 PM - 2:00 AM',
         date='Saturday June 15th',
-        location='The Sultan Rooftop',
+        location='The Sultan Rooftop' ',' ' Brooklyn' ',' ' NY',
         price='$25',
         image='assets/images/Familiar Faces.jpg'
     )
@@ -67,7 +67,7 @@ with app.app_context():
         vibe='Dance' '/' 'Electronic',
         time='10:30 PM - 3:00 AM',
         date='Fridays, July 19th',
-        location='Elewhere',
+        location='Elsewhere' ',' ' Brooklyn' ',' ' NY',
         image='assets/images/Frequency.jpg'
     ) 
     events.append(e6)
@@ -77,7 +77,7 @@ with app.app_context():
         vibe='Hip-Hop' '/' 'R&B',
         time='3:00 PM - 7:00 PM',
         date='Thursday July 4th',
-        location='410 Quincy Ave',
+        location='410 Quincy Ave' ',' ' Brooklyn' ',' ' NY',
         price='Free',
         image='assets/images/BK Block Party.jpg'
     )
@@ -88,7 +88,7 @@ with app.app_context():
         vibe='Dance' '/' 'Dubstep',
         time='9:00 PM - 11:00 PM',
         date='Friday, August 16th',
-        location='Elsewhere Rooftop',
+        location='Elsewhere Rooftop' ',' ' Brooklyn' ',' ' NY',
         price='$20',
         image='assets/images/Dance Dubs.jpg'
     )
@@ -99,7 +99,7 @@ with app.app_context():
         vibe='Deep House',
         time='3:00 PM - 2:00 AM',
         date='Saturday August 17th',
-        location='Knockdown Center',
+        location='Knockdown Center' ',' ' Queens' ',' ' NY',
         price='$20',
         image='assets/images/Familiar Faces.jpg'
     )
@@ -110,7 +110,7 @@ with app.app_context():
         vibe='Dance',
         time='6:00 PM - 2:00 AM',
         date='Friday, August 23rd',
-        location='599 Johnson Ave',
+        location='599 Johnson Ave' ',' ' Brooklyn' ',' ' NY',
         price='Free',
         image='assets/images/Lavern.jpg'
     )
@@ -121,7 +121,7 @@ with app.app_context():
         vibe='Pop' '/' 'Dance' '/' 'Electronic',
         time='9:00 PM - 2:00 AM',
         date='Saturday, August 17th',
-        location='Elsewhere',
+        location='Elsewhere' ',' ' Brooklyn' ',' ' NY',
         price='$20',
         image='assets/images/Culture Shock.jpg'
     )
@@ -132,7 +132,7 @@ with app.app_context():
         vibe='Dance' '/' 'Pop',
         time='9:00 PM - 2:00 AM',
         date='Thursday July, 11th',
-        location='Elsewhere',
+        location='Elsewhere' ',' ' Brooklyn' ',' ' NY',
         price='25',
         image='assets/images/X & Ivy.jpg'
     )
@@ -143,7 +143,7 @@ with app.app_context():
         vibe='Punk' '/' 'Hip-hop' '/' 'Funk',
         time='3:00 PM - 7:00 PM',
         date='Friday, August 23rd',
-        location='Elsewhere',
+        location='Elsewhere' ',' ' Brooklyn' ',' ' NY',
         price='$40',
         image='assets/images/ESG.jpg'
     )
@@ -151,10 +151,10 @@ with app.app_context():
 
     e14 = Event(
         name='Gayjoy Pride',
-        vibe='Hip-Hop' '/' 'R&B',
+        vibe='Pop' '/' 'Electronic',
         time='9:00 PM - 2:00 AM',
         date='Tursday, June 4th',
-        location='The Sultan Rooftop',
+        location='Elsewhere' ',' ' Brooklyn' ',' ' NY',
         price='$30',
         image='assets/images/Pride.jpg'
     )
@@ -176,7 +176,7 @@ with app.app_context():
         vibe='Hip-Hop' '/' 'R&B' '/' 'Dancehall' '/' 'Afrobeats',
         time='10:00 PM - 4:00 AM',
         date='Friday, June 21st',
-        location='Our Wicked Lady',
+        location='Our Wicked Lady' ',' ' Brooklyn' ',' ' NY',
         price='$20',
         image='assets/images/No Requests.jpg'
     )
@@ -187,7 +187,7 @@ with app.app_context():
         vibe='Hip-Hop' '/' 'Afrobeats',
         time='3:00 PM - 7:00 PM',
         date='Saturday, June 15th',
-        location='52-19 Flushing Ave',
+        location='52-19 Flushing Ave' ',' ' Queens' ',' ' NY', 
         price='$30',
         image='assets/images/Major League.jpg'
     )
@@ -198,7 +198,7 @@ with app.app_context():
         vibe='Hip-Hop' '/' 'R&B',
         time='3:00 PM - 7:00 PM',
         date='Wednesday, June 19th',
-        location='The Crown',
+        location='The Crown' ',' ' New York' ',' ' NY',
         price='Free',
         image='assets/images/A NY Juneteenth.jpg'
     )
@@ -209,7 +209,7 @@ with app.app_context():
         vibe='Hip-Hop' '/' 'Rap',
         time='9:00 PM - 2:00 AM',
         date='Thursday October, 17th',
-        location='Elsewhere',
+        location='Elsewhere' ',' ' Brooklyn' ',' ' NY',
         price='$40',
         image='assets/images/Bladee.jpg'
     )
@@ -217,11 +217,11 @@ with app.app_context():
 
     e20 = Event(
         name='CMYK',
-        vibe='Hip-Hop' '/' 'R&B',
+        vibe='Pop' '/' 'Electronic',
         time='3:00 PM - 2:00 AM',
         date='Friday, June 14th',
-        location='Knockdown Center',
-        price='$30',
+        location='Knockdown Center' ',' ' Queens' ',' ' NY',
+        price='$40',
         image='assets/images/CMYK.jpg'
     )
     events.append(e20)
@@ -231,7 +231,7 @@ with app.app_context():
         vibe='Hip-Hop' '/' 'R&B',
         time='10:00 PM - 4:00 AM',
         date='Saturday, June 22nd',
-        location='Knockdown Center',
+        location='Knockdown Center' ',' ' Queens' ',' ' NY',
         price='$30',
         image='assets/images/One Night.jpg'
     )
@@ -253,7 +253,7 @@ with app.app_context():
         vibe='Dance' '/' 'Electronic' '/' 'Pop',
         time='10:00 PM - 2:00 AM',
         date='Thursday, June 20th',
-        location='Cafe Erzulie',
+        location='Cafe Erzulie' ',' ' Brooklyn' ',' ' NY',
         price='$20',
         image='assets/images/Sound wav.jpg'
     )
@@ -264,7 +264,7 @@ with app.app_context():
         vibe='Hip-Hop' '/' 'R&B' '/' 'Dancehall' '/' 'Afrobeats',
         time='10:00 PM - 2:00 AM',
         date='Thursday, June 20th',
-        location='Cafe Erzulie',
+        location='Cafe Erzulie' ',' ' Brooklyn' ',' ' NY',
         price='$20',
         image='assets/images/Whine Up.jpg'
     )
