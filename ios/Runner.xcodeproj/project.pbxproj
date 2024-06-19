@@ -105,7 +105,6 @@
 				70730A6F2869303DB0BA245A /* Pods-RunnerTests.release.xcconfig */,
 				76C4E4D2B52C28FCA6A5B430 /* Pods-RunnerTests.profile.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -414,6 +413,7 @@
 /* Begin XCBuildConfiguration section */
 		249021D3217E4FDB00AE95B9 /* Profile */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EC0C1DB68BB373BBD81EA806 /* Pods-Runner.profile.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -457,6 +457,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				"PODS_CONFIGURATION_BUILD_DIR[arch=*]" = "Pods-Runner.profile.xcconfig";
+				"PODS_XCFRAMEWORKS_BUILD_DIR[arch=*]" = "Pods-Runner.profile.xcconfig";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -466,7 +468,7 @@
 		};
 		249021D4217E4FDB00AE95B9 /* Profile */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7AFA3C8E1D35360C0083082E /* Release.xcconfig */;
+			baseConfigurationReference = EC0C1DB68BB373BBD81EA806 /* Pods-Runner.profile.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -477,6 +479,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				PODS_CONFIGURATION_BUILD_DIR = "Pods-Runner.profile.xcconfig";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.phase5Project;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -487,7 +490,7 @@
 		};
 		331C8088294A63A400263BE5 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9D34654529C07693FFC2BA7E /* Pods-RunnerTests.debug.xcconfig */;
+			baseConfigurationReference = EC0C1DB68BB373BBD81EA806 /* Pods-Runner.profile.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -505,7 +508,7 @@
 		};
 		331C8089294A63A400263BE5 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 70730A6F2869303DB0BA245A /* Pods-RunnerTests.release.xcconfig */;
+			baseConfigurationReference = EC0C1DB68BB373BBD81EA806 /* Pods-Runner.profile.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -521,7 +524,7 @@
 		};
 		331C808A294A63A400263BE5 /* Profile */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 76C4E4D2B52C28FCA6A5B430 /* Pods-RunnerTests.profile.xcconfig */;
+			baseConfigurationReference = EC0C1DB68BB373BBD81EA806 /* Pods-Runner.profile.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -537,6 +540,7 @@
 		};
 		97C147031CF9000F007C117D /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EC0C1DB68BB373BBD81EA806 /* Pods-Runner.profile.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -567,6 +571,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				"DEBUG_INFORMATION_FORMAT[sdk=*]" = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -587,6 +592,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				"PODS_CONFIGURATION_BUILD_DIR[arch=*]" = "Pods-Runner.profile.xcconfig";
+				"PODS_XCFRAMEWORKS_BUILD_DIR[arch=*]" = "Pods-Runner.profile.xcconfig";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -594,6 +601,7 @@
 		};
 		97C147041CF9000F007C117D /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EC0C1DB68BB373BBD81EA806 /* Pods-Runner.profile.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -637,6 +645,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				"PODS_CONFIGURATION_BUILD_DIR[arch=*]" = "Pods-Runner.profile.xcconfig";
+				"PODS_XCFRAMEWORKS_BUILD_DIR[arch=*]" = "Pods-Runner.profile.xcconfig";
 				SDKROOT = iphoneos;
 				SUPPORTED_PLATFORMS = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -648,7 +658,7 @@
 		};
 		97C147061CF9000F007C117D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9740EEB21CF90195004384FC /* Debug.xcconfig */;
+			baseConfigurationReference = EC0C1DB68BB373BBD81EA806 /* Pods-Runner.profile.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -659,6 +669,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				PODS_CONFIGURATION_BUILD_DIR = "Pods-Runner.profile.xcconfig";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.phase5Project;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
@@ -670,7 +681,7 @@
 		};
 		97C147071CF9000F007C117D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7AFA3C8E1D35360C0083082E /* Release.xcconfig */;
+			baseConfigurationReference = EC0C1DB68BB373BBD81EA806 /* Pods-Runner.profile.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -681,6 +692,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				PODS_CONFIGURATION_BUILD_DIR = "Pods-Runner.profile.xcconfig";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.phase5Project;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";

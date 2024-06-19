@@ -30,10 +30,9 @@ class CreateScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color.fromARGB(255, 220, 216, 226),
       appBar: AppBar(
-        title: Text('Create An Event', style: titleStyle),
-        backgroundColor: deepPurple,
+        title: Text('Create An Event'),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -74,9 +73,7 @@ class CreateScreen extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () => postEvent(context),
                   child: Text('Post'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: deepPurple,
-                  ),
+                  style: ElevatedButton.styleFrom(),
                 ),
               ],
             ),
@@ -125,6 +122,10 @@ class CreateScreen extends StatelessWidget {
   }
 
   void postEvent(BuildContext context) async {
+    // Example: Bypassing authentication token (remove in production)
+    // String authToken = ''; // Provide your authentication token if needed
+
+    // Reading auth token from secure storage
     String? authToken;
     try {
       authToken = await storage.read(key: 'authToken'); // Read the token
@@ -156,10 +157,11 @@ class CreateScreen extends StatelessWidget {
       }),
     );
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Event posted successfully!')),
       );
+      // Navigate back to HomeScreen after posting
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => HomeScreen()),

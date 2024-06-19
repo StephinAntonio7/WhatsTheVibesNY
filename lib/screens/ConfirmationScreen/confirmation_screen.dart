@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:phase5_project/screens/HomeScreen/home_screen.dart';
 import 'package:phase5_project/screens/ProfileScreen/profile_screen.dart';
+import 'package:phase5_project/screens/FavoritesScreen/favorites_screen.dart';
 
 class ConfirmationScreen extends StatelessWidget {
   const ConfirmationScreen({Key? key}) : super(key: key);
@@ -75,7 +76,10 @@ class ConfirmationScreen extends StatelessWidget {
         onTap: (int index) {
           switch (index) {
             case 0:
-              // Navigate to Favorites screen (if applicable)
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => FavoritesScreen()),
+              );
               break;
             case 1:
               // Navigate to HomeScreen

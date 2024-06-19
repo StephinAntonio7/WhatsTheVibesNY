@@ -1,22 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:phase5_project/screens/HomeScreen/home_screen.dart';
 import 'package:phase5_project/screens/SignupScreen/signup_screen.dart';
 
 class LoginScreen extends StatelessWidget {
-  final storage = FlutterSecureStorage();
-
-  LinearGradient get gradient => LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: [
-          Color.fromARGB(255, 19, 138, 116),
-          Color.fromARGB(255, 23, 126, 95),
-        ],
-      );
-
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
@@ -27,7 +15,14 @@ class LoginScreen extends StatelessWidget {
       body: Container(
         height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
-          gradient: gradient,
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color.fromARGB(255, 19, 138, 116),
+              Color.fromARGB(255, 23, 126, 95),
+            ],
+          ),
         ),
         child: SafeArea(
           child: Padding(
@@ -60,16 +55,6 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 20.0),
-                Row(
-                  children: [
-                    Checkbox(
-                      value: false,
-                      onChanged: (value) {},
-                    ),
-                    Text('Remember Me'),
-                  ],
-                ),
-                SizedBox(height: 20.0),
                 ElevatedButton(
                   onPressed: () async {
                     final email = emailController.text;
@@ -86,12 +71,7 @@ class LoginScreen extends StatelessWidget {
                       );
 
                       if (response.statusCode == 200) {
-                        final Map<String, dynamic> data =
-                            jsonDecode(response.body);
-                        final String token = data['token'];
-
-                        await storage.write(key: 'authToken', value: token);
-
+                        // Skip storing token and directly navigate to HomeScreen
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(builder: (context) => HomeScreen()),
@@ -101,8 +81,9 @@ class LoginScreen extends StatelessWidget {
                             jsonDecode(response.body);
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
-                              content:
-                                  Text('Login failed: ${errorData['error']}')),
+                            content:
+                                Text('Login failed: ${errorData['error']}'),
+                          ),
                         );
                       }
                     } catch (e) {
@@ -113,7 +94,6 @@ class LoginScreen extends StatelessWidget {
                   },
                   child: Text('Login'),
                   style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.deepPurple,
                     padding:
                         EdgeInsets.symmetric(horizontal: 50.0, vertical: 15.0),
                   ),
@@ -138,13 +118,14 @@ class LoginScreen extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('Don\'t have an account?'),
+                    Text("Don't have an account?"),
                     TextButton(
                       onPressed: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => SignupScreen()),
+                            builder: (context) => SignupScreen(),
+                          ),
                         );
                       },
                       child: Text('Sign Up'),

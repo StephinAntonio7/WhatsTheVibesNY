@@ -50,23 +50,38 @@ def login():
 
 @routes_bp.route('/api/user-event', methods=['POST'])
 def post_user_event():
-    user_id = session.get('user_id')
-    if not user_id:
-        return jsonify({"error": "Not logged in"}), 401
+    # Bypassing authentication (remove in production)
+    # user_id = 1  # Provide actual user ID if needed
     
-    event = Event(
-        name=request.json['name'],
-        vibe=request.json['vibe'],
-        time=request.json['time'],
-        date=request.json['date'],
-        location=request.json['location'],
-        price=request.json['price'],
-        image=request.json['image'],
-        user_id=user_id
+    # Retrieve event data from request JSON
+    data = request.json
+    name = data.get('name')
+    vibe = data.get('vibe')
+    date = data.get('date')
+    time = data.get('time')
+    location = data.get('location')
+    price = data.get('price')
+    image = data.get('image')
+
+    # Example: Creating a new event
+    new_event = Event(
+        name=name,
+        vibe=vibe,
+        date=date,
+        time=time,
+        location=location,
+        price=price,
+        image=image,
+        user_id=user_id,
+        created_at=datetime.now(),
     )
-    db.session.add(event)
+
+    # Add event to database and commit
+    db.session.add(new_event)
     db.session.commit()
-    return jsonify(event.to_dict()), 201
+
+    # Return the newly created event as JSON response
+    return jsonify(new_event.to_dict()), 201
 
 @routes_bp.route('/api/events', methods=['GET'])
 def get_events():

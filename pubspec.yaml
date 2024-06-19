@@ -31,6 +31,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_secure_storage: ^9.2.2
+  path_provider_foundation: ^2.0.0
   jwt_decoder: ^2.0.1
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -69,7 +70,27 @@ flutter:
     - assets/images/No Type Part III.JPEG
     - assets/images/Brunch Party.jpg
     - assets/images/1 Motif Party.jpeg
-
+    - assets/images/Familiar Faces.jpg
+    - assets/images/First Thursdays.png
+    - assets/images/BK Block Party.jpg
+    - assets/images/A NY Juneteenth.jpg
+    - assets/images/Bedquin.jpg
+    - assets/images/Bladee.jpg
+    - assets/images/CMYK.jpg
+    - assets/images/Dance Dubs.jpg
+    - assets/images/ESG.jpg
+    - assets/images/Frequency.jpg
+    - assets/images/Lavern.jpg
+    - assets/images/Major League.jpg
+    - assets/images/No Requests.jpg
+    - assets/images/One Night.jpg
+    - assets/images/Pride.jpg
+    - assets/images/South House.jpg
+    - assets/images/X & Ivy.jpg
+    - assets/images/Culture Shock.jpg
+    - assets/images/Whine Up.jpg
+    - assets/images/Versus.jpg
+    - assets/images/Sound wav.jpg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

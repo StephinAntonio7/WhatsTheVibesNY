@@ -8,6 +8,8 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor:
+          const Color.fromARGB(255, 220, 216, 226), // Set background color
       appBar: AppBar(
         title: Text('My Profile'),
       ),
@@ -81,6 +83,14 @@ class ProfileScreen extends StatelessWidget {
                   location: 'Fort Greene Park',
                   purchased: false,
                 ),
+                SizedBox(height: 4), // Added space between EventCards
+                EventCard(
+                  vibe: 'Gov Ball',
+                  time: '1:00 PM',
+                  date: 'June 5th, 2024',
+                  location: 'Flushing Meadows Corona Park',
+                  purchased: false,
+                ),
               ],
             ),
           ),
@@ -117,11 +127,7 @@ class ProfileScreen extends StatelessWidget {
               );
               break;
             case 2:
-              // Navigate to ProfileScreen
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => ProfileScreen()),
-              );
+              // Stay on ProfileScreen
               break;
           }
         },

@@ -10,9 +10,9 @@ with app.app_context():
     e1 = Event(
         name='No Type Part III',
         vibe='Hip-Hop' '/' 'R&B' '/' 'Afrobeats',
-        time='1:00 PM - 3:00 PM',
-        date='Thursday, June 30th',
-        location='123 Main St',
+        time='4:00 PM - 9:00 PM',
+        date='Saturday, June 1st',
+        location='90 Scott Ave',
         price='$20',
         image='assets/images/No Type Part III.JPEG'
     )

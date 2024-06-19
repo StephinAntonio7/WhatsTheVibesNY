@@ -60,9 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
           .get(Uri.parse('http://127.0.0.1:5555/api/events?search=$keyword'));
       if (response.statusCode == 200) {
         setState(() {
-          searchResults = (jsonDecode(response.body) as List).where((event) {
-            return event['vibe'].toLowerCase().contains(keyword.toLowerCase());
-          }).toList();
+          searchResults = jsonDecode(response.body);
           output =
               'Search results for "$keyword": ${searchResults.length} events found';
         });
@@ -199,87 +197,82 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ],
         onTap: (int index) {
-          if (index == 0) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => FavoritesScreen()),
-            );
-          } else if (index == 1) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const HomeScreen()),
-            );
-          } else if (index == 2) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => const ProfileScreen()),
-            );
+          switch (index) {
+            case 0:
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => FavoritesScreen()),
+              );
+              break;
+            case 1:
+              // Stay on the Favorites screen
+              break;
+            case 2:
+              // Navigate to ProfileScreen
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => ProfileScreen()),
+              );
+              break;
           }
         },
       ),
     );
   }
 
-  Widget _buildEventItem(String eventName, String imagePath,
-      [Map<String, dynamic>? eventDetails]) {
+  Widget _buildEventItem(
+      String eventName, String imagePath, Map<String, dynamic> eventDetails) {
     bool isFavorite = favoritesState.favorites.containsKey(eventName);
     return GestureDetector(
-      onTap: () => navigateToEvent(eventName, context),
+      onTap: () => navigateToEvent(eventDetails, context),
       child: Stack(
         children: [
-          Container(
-            margin: const EdgeInsets.all(8.0),
-            child: imagePath.startsWith('assets')
-                ? Image.asset(
-                    imagePath,
-                    fit: BoxFit.cover,
-                    errorBuilder: (BuildContext context, Object exception,
-                        StackTrace? stackTrace) {
-                      return Container(
-                        height: 100,
-                        color: Colors.grey,
-                        child: Icon(
-                          Icons.broken_image,
-                          color: Colors.white,
-                        ),
-                      );
-                    },
-                  )
-                : Image.network(
-                    imagePath,
-                    fit: BoxFit.cover,
-                    errorBuilder: (BuildContext context, Object exception,
-                        StackTrace? stackTrace) {
-                      return Container(
-                        height: 100,
-                        color: Colors.grey,
-                        child: Icon(
-                          Icons.broken_image,
-                          color: Colors.white,
-                        ),
-                      );
-                    },
-                  ),
+          Center(
+            child: Container(
+              margin: const EdgeInsets.all(8.0),
+              child: imagePath.startsWith('assets')
+                  ? Image.asset(
+                      imagePath,
+                      fit: BoxFit.cover,
+                      errorBuilder: (BuildContext context, Object exception,
+                          StackTrace? stackTrace) {
+                        return Container(
+                          height: 100,
+                          color: Colors.grey,
+                          child: Icon(
+                            Icons.broken_image,
+                            color: Colors.white,
+                          ),
+                        );
+                      },
+                    )
+                  : Image.network(
+                      imagePath,
+                      fit: BoxFit.cover,
+                      errorBuilder: (BuildContext context, Object exception,
+                          StackTrace? stackTrace) {
+                        return Container(
+                          height: 100,
+                          color: Colors.grey,
+                          child: Icon(
+                            Icons.broken_image,
+                            color: Colors.white,
+                          ),
+                        );
+                      },
+                    ),
+            ),
           ),
           Positioned(
-            top: 8.0,
-            right: 8.0,
+            top: 5,
+            right: 5,
             child: IconButton(
               icon: Icon(
                 isFavorite ? Icons.favorite : Icons.favorite_border,
                 color: isFavorite ? Colors.red : null,
               ),
               onPressed: () {
-                setState(() {
-                  favoritesState.toggleFavorite(eventName, eventDetails ?? {});
-                });
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(
-                      '$eventName ${isFavorite ? 'removed from' : 'added to'} favorites!',
-                    ),
-                  ),
-                );
+                toggleFavorite(eventName, eventDetails);
               },
             ),
           ),
@@ -288,35 +281,31 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void navigateToEvent(String eventName, BuildContext context) async {
-    try {
-      final response = await http
-          .get(Uri.parse('http://127.0.0.1:5555/api/event/$eventName'));
-      if (response.statusCode == 200) {
-        var data = jsonDecode(response.body);
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => EventScreen(
-              name: data['name'],
-              vibe: data['vibe'],
-              time: data['time'],
-              date: data['date'],
-              location: data['location'],
-              price: data['price'],
-              image: data['image'],
-            ),
-          ),
-        );
+  void navigateToEvent(
+      Map<String, dynamic> eventDetails, BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => EventScreen(
+          name: eventDetails['name'],
+          vibe: eventDetails['vibe'],
+          time: eventDetails['time'],
+          date: eventDetails['date'],
+          location: eventDetails['location'],
+          price: eventDetails['price'],
+          image: eventDetails['image'],
+        ),
+      ),
+    );
+  }
+
+  void toggleFavorite(String eventName, [Map<String, dynamic>? eventDetails]) {
+    setState(() {
+      if (favoritesState.favorites.containsKey(eventName)) {
+        favoritesState.favorites.remove(eventName);
       } else {
-        setState(() {
-          errorMessage = 'Failed to load event details';
-        });
+        favoritesState.favorites[eventName] = eventDetails ?? {};
       }
-    } catch (e) {
-      setState(() {
-        errorMessage = e.toString();
-      });
-    }
+    });
   }
 }

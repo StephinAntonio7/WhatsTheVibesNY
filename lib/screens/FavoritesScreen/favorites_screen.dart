@@ -7,6 +7,8 @@ class FavoritesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(
+          255, 220, 216, 226), // Set the background color to light grey
       appBar: AppBar(
         title: const Text('My Favorite Events'),
       ),
@@ -36,7 +38,7 @@ class FavoritesScreen extends StatelessWidget {
                 },
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.grey[200],
+                    color: Colors.white, // Set container background to white
                     borderRadius: BorderRadius.circular(8.0),
                     boxShadow: [
                       BoxShadow(
