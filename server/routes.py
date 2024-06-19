@@ -72,10 +72,15 @@ def post_user_event():
 def get_events():
     search = request.args.get('search')
     if search:
-        events = Event.query.filter(Event.vibe.ilike(f'%{search}%')).all()
+        events = Event.query.filter(
+            (Event.vibe.ilike(f'%{search}%')) |
+            (Event.name.ilike(f'%{search}%')) |
+            (Event.location.ilike(f'%{search}%'))
+        ).all()
     else:
         events = Event.query.all()
     return jsonify([event.to_dict() for event in events]), 200
+
 
 @routes_bp.route('/api/event/<event_name>', methods=['GET'])
 def get_event_by_name(event_name):

@@ -9,7 +9,7 @@ with app.app_context():
 
     e1 = Event(
         name='No Type Part III',
-        vibe='Hip-Hop' 'R&B' 'Afrobeats',
+        vibe='Hip-Hop' '/' 'R&B' '/' 'Afrobeats',
         time='1:00 PM - 3:00 PM',
         date='Thursday, June 30th',
         location='123 Main St',
@@ -20,7 +20,7 @@ with app.app_context():
 
     e2 = Event(
         name='Brunch Party',
-        vibe='Hip-Hop' 'R&B' 'Day Party' 'Dancehall',
+        vibe='Hip-Hop' '/' 'R&B' '/' 'Day Party' '/' 'Dancehall',
         time='8:00 PM - 11:00 PM',
         date='Friday, July 2nd',
         location='789 Oak St',
@@ -31,7 +31,7 @@ with app.app_context():
 
     e3 = Event(
         name='1 Motif Party',
-        vibe='Hip-Hop' 'R&B' 'Afrobeats',
+        vibe='Hip-Hop' '/' 'R&B' '/' 'Afrobeats',
         time='9:00 PM - 1:00 AM',
         date='Friday, July 1st',
         location='456 Elm St',
@@ -42,7 +42,7 @@ with app.app_context():
     
     e4 = Event(
         name='First Thursdays',
-        vibe='Hip-Hop' 'R&B',
+        vibe='Hip-Hop' '/' 'R&B',
         time='9:00 PM - 1:00 AM',
         date='Thursday, June 6th',
         location='50 Bowery',
@@ -53,7 +53,7 @@ with app.app_context():
     
     e5 = Event(
         name='Familiar Faces',
-        vibe='Hip-Hop' 'R&B',
+        vibe='Hip-Hop' '/' 'R&B',
         time='9:00 PM - 2:00 AM',
         date='Saturday June 15th',
         location='The Sultan Rooftop',
@@ -64,7 +64,7 @@ with app.app_context():
     
     e6 = Event(
         name='Frequency Zoo',
-        vibe='Dance' 'Electronic',
+        vibe='Dance' '/' 'Electronic',
         time='10:30 PM - 3:00 AM',
         date='Fridays, July 19th',
         location='Elewhere',
@@ -74,7 +74,7 @@ with app.app_context():
     
     e7 = Event(
         name='BK Block Party',
-        vibe='Hip-Hop' 'R&B',
+        vibe='Hip-Hop' '/' 'R&B',
         time='3:00 PM - 7:00 PM',
         date='Thursday July 4th',
         location='410 Quincy Ave',
@@ -85,7 +85,7 @@ with app.app_context():
     
     e8 = Event(
         name='Notion + Pocket',
-        vibe='Dance' 'Dubstep',
+        vibe='Dance' '/' 'Dubstep',
         time='9:00 PM - 11:00 PM',
         date='Friday, August 16th',
         location='Elsewhere Rooftop',
@@ -118,7 +118,7 @@ with app.app_context():
 
     e11 = Event(
         name='Culture Shock',
-        vibe='Pop' 'Dance' 'Electronic',
+        vibe='Pop' '/' 'Dance' '/' 'Electronic',
         time='9:00 PM - 2:00 AM',
         date='Saturday, August 17th',
         location='Elsewhere',
@@ -129,7 +129,7 @@ with app.app_context():
 
     e12 = Event(
         name='X & Ivy',
-        vibe='Dance' 'Pop',
+        vibe='Dance' '/' 'Pop',
         time='9:00 PM - 2:00 AM',
         date='Thursday July, 11th',
         location='Elsewhere',
@@ -140,7 +140,7 @@ with app.app_context():
 
     e13 = Event(
         name='ESG + Midnight Magic',
-        vibe='Punk' 'Hip-hop' 'Funk',
+        vibe='Punk' '/' 'Hip-hop' '/' 'Funk',
         time='3:00 PM - 7:00 PM',
         date='Friday, August 23rd',
         location='Elsewhere',
@@ -151,7 +151,7 @@ with app.app_context():
 
     e14 = Event(
         name='Gayjoy Pride',
-        vibe='Hip-Hop' 'R&B',
+        vibe='Hip-Hop' '/' 'R&B',
         time='9:00 PM - 2:00 AM',
         date='Tursday, June 4th',
         location='The Sultan Rooftop',
@@ -162,7 +162,7 @@ with app.app_context():
 
     e15 = Event(
         name='South House X Naija House',
-        vibe='Hip-Hop' 'R&B' 'Afrobeats',
+        vibe='Hip-Hop' '/' 'R&B' '/' 'Afrobeats',
         time='10:30 PM - 4:00 AM',
         date='Tuesday, June 18th',
         location='The Well',
@@ -173,7 +173,7 @@ with app.app_context():
 
     e16 = Event(
         name='No Requests',
-        vibe='Hip-Hop' 'R&B' 'Dancehall' 'Afrobeats',
+        vibe='Hip-Hop' '/' 'R&B' '/' 'Dancehall' '/' 'Afrobeats',
         time='10:00 PM - 4:00 AM',
         date='Friday, June 21st',
         location='Our Wicked Lady',
@@ -184,7 +184,7 @@ with app.app_context():
 
     e17 = Event(
         name='Balcony Mix Africa',
-        vibe='Hip-Hop' 'Afrobeats',
+        vibe='Hip-Hop' '/' 'Afrobeats',
         time='3:00 PM - 7:00 PM',
         date='Saturday, June 15th',
         location='52-19 Flushing Ave',
@@ -195,7 +195,7 @@ with app.app_context():
 
     e18 = Event(
         name='A NY Juneteenth',
-        vibe='Hip-Hop' 'R&B',
+        vibe='Hip-Hop' '/' 'R&B',
         time='3:00 PM - 7:00 PM',
         date='Wednesday, June 19th',
         location='The Crown',
@@ -206,7 +206,7 @@ with app.app_context():
 
     e19 = Event(
         name='Bladee',
-        vibe='Hip-Hop' 'Rap',
+        vibe='Hip-Hop' '/' 'Rap',
         time='9:00 PM - 2:00 AM',
         date='Thursday October, 17th',
         location='Elsewhere',
@@ -217,7 +217,7 @@ with app.app_context():
 
     e20 = Event(
         name='CMYK',
-        vibe='Hip-Hop' 'R&B',
+        vibe='Hip-Hop' '/' 'R&B',
         time='3:00 PM - 2:00 AM',
         date='Friday, June 14th',
         location='Knockdown Center',
@@ -228,18 +228,7 @@ with app.app_context():
     
     e21 = Event(
         name='One Night',
-        vibe='Hip-Hop' 'R&B',
-        time='10:00 PM - 4:00 AM',
-        date='Saturday, June 22nd',
-        location='Knockdown Center',
-        price='$30',
-        image='assets/images/One Night.jpg'
-    )
-    events.append(e21)
-    
-    e21 = Event(
-        name='One Night',
-        vibe='Hip-Hop' 'R&B',
+        vibe='Hip-Hop' '/' 'R&B',
         time='10:00 PM - 4:00 AM',
         date='Saturday, June 22nd',
         location='Knockdown Center',
@@ -248,36 +237,36 @@ with app.app_context():
     )
     events.append(e21)
 
-    e21 = Event(
-        name='Versus',
-        vibe='Amapiano' 'Electronic' 'Afrohouse',
-        time='10:00 PM - 2:00 AM',
-        date='Thursday, June 20th',
-        location='Cafe Erzulie',
-        price='$20',
-        image='assets/images/One Night.jpg'
-    )
-    events.append(e21)
-    
     e22 = Event(
-        name='Sound Wav',
-        vibe='Dance' 'Electronic' 'Pop',
+        name='Versus',
+        vibe='Hip-Hop' '/' 'R&B' '/' 'Dancehall' '/' 'Afrobeats',
         time='10:00 PM - 2:00 AM',
         date='Thursday, June 20th',
         location='Cafe Erzulie',
         price='$20',
-        image='assets/images/One Night.jpg'
+        image='assets/images/Versus.jpg'
     )
-    events.append(e21)
+    events.append(e22)
+    
+    e23 = Event(
+        name='Sound Wav',
+        vibe='Dance' '/' 'Electronic' '/' 'Pop',
+        time='10:00 PM - 2:00 AM',
+        date='Thursday, June 20th',
+        location='Cafe Erzulie',
+        price='$20',
+        image='assets/images/Sound wav.jpg'
+    )
+    events.append(e23)
     
     e23 = Event(
         name='Whine Up',
-        vibe='Hip-Hop' 'R&B' 'Dancehall' 'Afrobeats',
+        vibe='Hip-Hop' '/' 'R&B' '/' 'Dancehall' '/' 'Afrobeats',
         time='10:00 PM - 2:00 AM',
         date='Thursday, June 20th',
         location='Cafe Erzulie',
         price='$20',
-        image='assets/images/One Night.jpg'
+        image='assets/images/Whine Up.jpg'
     )
     events.append(e23)
 
