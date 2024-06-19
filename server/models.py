@@ -1,4 +1,5 @@
 from extensions import db
+# from datetime import datetime
 
 class User(db.Model):
     __tablename__ = 'users_table'
@@ -31,6 +32,8 @@ class Event(db.Model):
     image = db.Column(db.String)
     user_id = db.Column(db.Integer, db.ForeignKey('users_table.id'))
     user = db.relationship('User', back_populates='events')
+    
+    # created_at = db.Column(db.DateTime, default=datetime.utcnow)  # Ensure this line is present
 
     def to_dict(self):
         return {
@@ -43,6 +46,7 @@ class Event(db.Model):
             'price': self.price,
             'image': self.image,
             'user_id': self.user_id
+            # 'created_at': self.created_at.strftime('%Y-%m-%d %H:%M:%S') if self.created_at else None
         }
     
     def __repr__(self):

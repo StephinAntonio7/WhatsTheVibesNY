@@ -1,4 +1,5 @@
 import os
+import logging
 from flask import Flask
 from flask_cors import CORS
 from dotenv import load_dotenv
@@ -16,6 +17,10 @@ CORS(app)
 # Initialize SQLAlchemy and Bcrypt
 db.init_app(app)
 bcrypt.init_app(app)
+
+# Setup logging
+logging.basicConfig(level=logging.DEBUG)  # Set log level as per your requirement
+app.logger.addHandler(logging.StreamHandler())  # Output logs to console
 
 # Import models after initializing the app to avoid circular import issues
 with app.app_context():
