@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:phase5_project/screens/HomeScreen/home_screen.dart';
 import 'package:phase5_project/screens/FavoritesScreen/favorites_screen.dart';
+// import 'package:phase5_project/screens/TicketScreen/ticket_screen.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -15,7 +16,6 @@ class ProfileScreen extends StatelessWidget {
           'My Profile',
           style: TextStyle(
             fontWeight: FontWeight.bold,
-            // fontStyle: FontStyle.italic,
           ),
         ),
       ),
@@ -28,10 +28,12 @@ class ProfileScreen extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 30,
-                  // backgroundColor:
-                  //     Colors.black, // Set avatar background color to black
-                  backgroundImage:
-                      NetworkImage('https://example.com/avatar.png'),
+                  backgroundColor: Colors.lightGreen,
+                  child: Icon(
+                    Icons.person,
+                    color: Colors.white,
+                    size: 30,
+                  ),
                 ),
                 SizedBox(width: 16),
                 Text(
@@ -46,27 +48,35 @@ class ProfileScreen extends StatelessWidget {
           ),
 
           // Upcoming Events section
-          Container(
-            padding: EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Upcoming Events',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
+          GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => TicketScreen()),
+              );
+            },
+            child: Container(
+              padding: EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Upcoming Events',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                SizedBox(height: 8),
-                EventCard(
-                  vibe: 'South House',
-                  time: '5:00 PM',
-                  date: 'July 7th, 2024',
-                  location: 'The Well',
-                  purchased: true,
-                ),
-              ],
+                  SizedBox(height: 8),
+                  EventCard(
+                    vibe: 'South House',
+                    time: '5:00 PM',
+                    date: 'July 7th, 2024',
+                    location: 'The Well',
+                    purchased: true,
+                  ),
+                ],
+              ),
             ),
           ),
 
@@ -119,6 +129,7 @@ class ProfileScreen extends StatelessWidget {
             label: 'Profile', // Changed label to 'Profile'
           ),
         ],
+        currentIndex: 2, // Set current index to ProfileScreen
         onTap: (int index) {
           switch (index) {
             case 0:
@@ -214,6 +225,30 @@ class EventCard extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class TicketScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () => Navigator.pop(context),
+        ),
+      ),
+      body: Center(
+        child: SizedBox(
+          width: 200, // Set the desired width
+          height: 200, // Set the desired height
+          child: Image.asset(
+            'assets/images/qr_code.jpg',
+            fit: BoxFit.contain, // Ensure the image fits within the box
+          ),
+        ),
       ),
     );
   }

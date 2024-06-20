@@ -695,7 +695,7 @@ with app.app_context():
         date='Sunday, July 14th',
         location='Knockdown Center' ',' ' Queens' ',' ' NY',
         price='$30',
-        image='assets/images/Circulate Black Dollars.jpg'
+        image='assets/images/EP.jpeg'
     )
     events.append(e61)
 
