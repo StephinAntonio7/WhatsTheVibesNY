@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:phase5_project/screens/FavoritesScreen/favorites_state.dart';
 import 'package:phase5_project/screens/HomeScreen/home_screen.dart';
 import 'package:phase5_project/screens/ProfileScreen/profile_screen.dart';
+import 'package:phase5_project/screens/EventScreen/event_screen.dart';
 
 class FavoritesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(
-          255, 220, 216, 226), // Set the background color to light grey
+      backgroundColor: const Color.fromARGB(255, 220, 216, 226),
       appBar: AppBar(
         title: const Text(
           'My Favorite Events',
@@ -39,11 +39,25 @@ class FavoritesScreen extends StatelessWidget {
                   favoritesState.favorites[eventName]!;
               return GestureDetector(
                 onTap: () {
-                  // Navigate to event details screen if needed
+                  // Navigate to EventScreen with the event details
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => EventScreen(
+                        name: eventDetails['name'],
+                        vibe: eventDetails['vibe'],
+                        time: eventDetails['time'],
+                        date: eventDetails['date'],
+                        location: eventDetails['location'],
+                        price: eventDetails['price'],
+                        image: eventDetails['image'],
+                      ),
+                    ),
+                  );
                 },
                 child: Container(
                   decoration: BoxDecoration(
-                    color: Colors.white, // Set container background to white
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(8.0),
                     boxShadow: [
                       BoxShadow(
@@ -137,25 +151,23 @@ class FavoritesScreen extends StatelessWidget {
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person), // Changed icon to user profile icon
-            label: 'Profile', // Changed label to 'Profile'
+            icon: Icon(Icons.person),
+            label: 'Profile',
           ),
         ],
-        currentIndex: 0, // Set the current index to the Favorites screen
+        currentIndex: 0,
         onTap: (int index) {
           switch (index) {
             case 0:
               // Stay on the Favorites screen
               break;
             case 1:
-              // Navigate to HomeScreen
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (context) => HomeScreen()),
               );
               break;
             case 2:
-              // Navigate to ProfileScreen
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (context) => ProfileScreen()),

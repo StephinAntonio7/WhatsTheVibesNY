@@ -72,17 +72,6 @@ with app.app_context():
     ) 
     events.append(e6)
     
-    e7 = Event(
-        name='BK Block Party',
-        vibe='Hip-Hop' '/' 'R&B',
-        time='3:00 PM - 7:00 PM',
-        date='Thursday July 4th',
-        location='410 Quincy Ave' ',' ' Brooklyn' ',' ' NY',
-        price='Free',
-        image='assets/images/BK Block Party.jpg'
-    )
-    events.append(e7)
-    
     e8 = Event(
         name='Notion + Pocket',
         vibe='Dance' '/' 'Dubstep',
@@ -427,8 +416,8 @@ with app.app_context():
     e38 = Event(
         name='Suede',
         vibe='R&B' '/' 'Chill' '/' '90s' '/' 'Slow Jams',
-        time='7:00 PM - 1:00 AM',
-        date='Saturday, June 22th',
+        time='9:00 PM - 2:00 AM',
+        date='Saturday, June 22nd',
         location='4709 Center Blvd' ',' ' Queens' ',' ' NY',
         price='$20',
         image='assets/images/Suede.jpg'
@@ -689,13 +678,13 @@ with app.app_context():
     events.append(e60)
     
     e61 = Event(
-        name='Everyday People',
-        vibe='Hip-hop' '/' 'Dancehall' '/' 'Afrobeats' '/' 'R&B',
-        time='5:00 PM - 11:00 PM',
-        date='Sunday, July 14th',
-        location='Knockdown Center' ',' ' Queens' ',' ' NY',
-        price='$30',
-        image='assets/images/EP.jpeg'
+        name='BK Block Party',
+        vibe='Hip-Hop' '/' 'R&B',
+        time='3:00 PM - 7:00 PM',
+        date='Thursday July 4th',
+        location='410 Quincy Ave' ',' ' Brooklyn' ',' ' NY',
+        price='Free',
+        image='assets/images/BK Block Party.jpg'
     )
     events.append(e61)
 

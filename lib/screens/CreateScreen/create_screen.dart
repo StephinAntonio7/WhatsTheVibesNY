@@ -143,7 +143,7 @@ class CreateScreen extends StatelessWidget {
       Navigator.pop(context, newEvent);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to post event')),
+        SnackBar(content: Text('Event posted successfully!')),
       );
     }
   }

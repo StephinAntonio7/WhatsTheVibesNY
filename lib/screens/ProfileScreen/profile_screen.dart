@@ -29,11 +29,11 @@ class ProfileScreen extends StatelessWidget {
                 CircleAvatar(
                   radius: 30,
                   backgroundColor: Colors.lightGreen,
-                  child: Icon(
-                    Icons.person,
-                    color: Colors.white,
-                    size: 30,
-                  ),
+                  // child: Icon(
+                  //   Icons.person,
+                  //   color: Colors.white,
+                  //   size: 30,
+                  // ),
                 ),
                 SizedBox(width: 16),
                 Text(
@@ -69,10 +69,10 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 8),
                   EventCard(
-                    vibe: 'South House',
-                    time: '5:00 PM',
-                    date: 'July 7th, 2024',
-                    location: 'The Well',
+                    vibe: 'Suede',
+                    time: '9:00 PM',
+                    date: 'June 22nd, 2024',
+                    location: 'Record Room',
                     purchased: true,
                   ),
                 ],
