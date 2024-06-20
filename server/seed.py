@@ -101,7 +101,7 @@ with app.app_context():
         date='Saturday August 17th',
         location='Knockdown Center' ',' ' Queens' ',' ' NY',
         price='$20',
-        image='assets/images/Familiar Faces.jpg'
+        image='assets/images/Bedquin.jpg'
     )
     events.append(e9)
 
@@ -601,11 +601,11 @@ with app.app_context():
     events.append(e52)
 
     e53 = Event(
-        name='Love From The Sun',
+        name='Yard + Abroad',
         vibe='Dancehall' '/' 'Reggae' '/' 'Hip-Hop' '/' 'R&B',
         time='10:00 PM - 4:00 AM',
         date='Thursdays',
-        location='Miss Lily/s' ',' ' New York' ',' ' NY',
+        location='Miss Lilys' ',' ' New York' ',' ' NY',
         price='$10',
         image='assets/images/Yard + Abroad.jpg'
     )
@@ -687,6 +687,17 @@ with app.app_context():
         image='assets/images/Circulate Black Dollars.jpg'
     )
     events.append(e60)
+    
+    e61 = Event(
+        name='Everyday People',
+        vibe='Hip-hop' '/' 'Dancehall' '/' 'Afrobeats' '/' 'R&B',
+        time='5:00 PM - 11:00 PM',
+        date='Sunday, July 14th',
+        location='Knockdown Center' ',' ' Queens' ',' ' NY',
+        price='$30',
+        image='assets/images/Circulate Black Dollars.jpg'
+    )
+    events.append(e61)
 
     db.session.add_all(events)
     db.session.commit()
