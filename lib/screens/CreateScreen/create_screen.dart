@@ -29,7 +29,10 @@ class CreateScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 223, 231, 234),
       appBar: AppBar(
-        title: Text('Create An Event'),
+        title: Text(
+          'Create An Event',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(
