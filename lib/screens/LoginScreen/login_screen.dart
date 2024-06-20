@@ -25,115 +25,136 @@ class LoginScreen extends StatelessWidget {
           ),
         ),
         child: SafeArea(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 20.0),
-                Text(
-                  'Login',
+          child: Column(
+            children: [
+              SizedBox(height: 50.0),
+              Center(
+                child: Text(
+                  "What's The Vibes NY",
                   style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30.0,
+                    fontSize: 25.0,
+                    fontFamily: 'Montserrat',
                     fontWeight: FontWeight.bold,
+                    fontStyle: FontStyle.italic,
+                    color: Colors.black,
                   ),
+                  textAlign: TextAlign.center,
                 ),
-                SizedBox(height: 20.0),
-                TextField(
-                  controller: emailController,
-                  decoration: InputDecoration(
-                    labelText: 'Email',
-                  ),
-                ),
-                SizedBox(height: 20.0),
-                TextField(
-                  controller: passwordController,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    labelText: 'Password',
-                  ),
-                ),
-                SizedBox(height: 20.0),
-                ElevatedButton(
-                  onPressed: () async {
-                    final email = emailController.text;
-                    final password = passwordController.text;
-
-                    try {
-                      final response = await http.post(
-                        Uri.parse('http://127.0.0.1:5555/api/login'),
-                        headers: {'Content-Type': 'application/json'},
-                        body: jsonEncode({
-                          'email': email,
-                          'password': password,
-                        }),
-                      );
-
-                      if (response.statusCode == 200) {
-                        // Skip storing token and directly navigate to HomeScreen
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (context) => HomeScreen()),
-                        );
-                      } else {
-                        final Map<String, dynamic> errorData =
-                            jsonDecode(response.body);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content:
-                                Text('Login failed: ${errorData['error']}'),
-                          ),
-                        );
-                      }
-                    } catch (e) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Error: $e')),
-                      );
-                    }
-                  },
-                  child: Text('Login'),
-                  style: ElevatedButton.styleFrom(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 50.0, vertical: 15.0),
-                  ),
-                ),
-                SizedBox(height: 20.0),
-                Align(
-                  alignment: Alignment.center,
-                  child: TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              HomeScreen(), // Navigate to Forgot Password Screen
+              ),
+              Expanded(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(height: 20.0),
+                      Text(
+                        'Login',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 25.0,
+                          fontWeight: FontWeight.bold,
                         ),
-                      );
-                    },
-                    child: Text('Forgot Password?'),
+                      ),
+                      SizedBox(height: 20.0),
+                      TextField(
+                        controller: emailController,
+                        decoration: InputDecoration(
+                          labelText: 'Email',
+                        ),
+                      ),
+                      SizedBox(height: 20.0),
+                      TextField(
+                        controller: passwordController,
+                        obscureText: true,
+                        decoration: InputDecoration(
+                          labelText: 'Password',
+                        ),
+                      ),
+                      SizedBox(height: 20.0),
+                      ElevatedButton(
+                        onPressed: () async {
+                          final email = emailController.text;
+                          final password = passwordController.text;
+
+                          try {
+                            final response = await http.post(
+                              Uri.parse('http://127.0.0.1:5555/api/login'),
+                              headers: {'Content-Type': 'application/json'},
+                              body: jsonEncode({
+                                'email': email,
+                                'password': password,
+                              }),
+                            );
+
+                            if (response.statusCode == 200) {
+                              // Skip storing token and directly navigate to HomeScreen
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => HomeScreen()),
+                              );
+                            } else {
+                              final Map<String, dynamic> errorData =
+                                  jsonDecode(response.body);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text(
+                                      'Login failed: ${errorData['error']}'),
+                                ),
+                              );
+                            }
+                          } catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('Error: $e')),
+                            );
+                          }
+                        },
+                        child: Text('Login'),
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 50.0, vertical: 15.0),
+                        ),
+                      ),
+                      SizedBox(height: 20.0),
+                      Align(
+                        alignment: Alignment.center,
+                        child: TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    HomeScreen(), // Navigate to Forgot Password Screen
+                              ),
+                            );
+                          },
+                          child: Text('Forgot Password?'),
+                        ),
+                      ),
+                      SizedBox(height: 20.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Don't have an account?"),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => SignupScreen(),
+                                ),
+                              );
+                            },
+                            child: Text('Sign Up'),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
-                SizedBox(height: 20.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("Don't have an account?"),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => SignupScreen(),
-                          ),
-                        );
-                      },
-                      child: Text('Sign Up'),
-                    ),
-                  ],
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

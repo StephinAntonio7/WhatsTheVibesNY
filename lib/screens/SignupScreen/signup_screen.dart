@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -92,13 +91,27 @@ class _SignupScreenState extends State<SignupScreen> {
         child: Form(
           key: _formKey,
           child: ListView(
-            padding: EdgeInsets.all(20.0),
+            padding: EdgeInsets.all(25.0),
             children: <Widget>[
+              SizedBox(height: 40.0),
+              Center(
+                child: Text(
+                  "Welcome to What's The Vibes NY",
+                  style: TextStyle(
+                    fontSize: 25.0,
+                    fontFamily: 'Montserrat',
+                    fontStyle: FontStyle.italic,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
               SizedBox(height: 20.0),
               Text(
                 'Sign Up',
                 style: TextStyle(
-                  fontSize: 30.0,
+                  fontSize: 20.0,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                 ),

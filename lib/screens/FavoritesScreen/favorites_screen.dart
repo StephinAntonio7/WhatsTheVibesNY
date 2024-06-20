@@ -10,7 +10,12 @@ class FavoritesScreen extends StatelessWidget {
       backgroundColor: const Color.fromARGB(
           255, 220, 216, 226), // Set the background color to light grey
       appBar: AppBar(
-        title: const Text('My Favorite Events'),
+        title: const Text(
+          'My Favorite Events',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
       body: AnimatedBuilder(
         animation: favoritesState,

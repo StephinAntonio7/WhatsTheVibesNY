@@ -17,7 +17,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 192, 200, 203),
+      backgroundColor: Color.fromARGB(255, 223, 231, 234),
       body: SingleChildScrollView(
         child: Column(
           children: [

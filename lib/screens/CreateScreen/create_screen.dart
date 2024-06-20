@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:phase5_project/screens/HomeScreen/home_screen.dart';
 import 'package:phase5_project/screens/ProfileScreen/profile_screen.dart';
@@ -8,8 +7,6 @@ import 'package:phase5_project/screens/FavoritesScreen/favorites_screen.dart';
 
 class CreateScreen extends StatelessWidget {
   static const Color deepPurple = Color.fromARGB(255, 166, 163, 171);
-
-  final storage = FlutterSecureStorage(); // Initialize secure storage
 
   final TextStyle titleStyle = TextStyle(
     fontSize: 24,
@@ -30,7 +27,7 @@ class CreateScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 220, 216, 226),
+      backgroundColor: Color.fromARGB(255, 223, 231, 234),
       appBar: AppBar(
         title: Text('Create An Event'),
       ),
@@ -122,29 +119,10 @@ class CreateScreen extends StatelessWidget {
   }
 
   void postEvent(BuildContext context) async {
-    // Example: Bypassing authentication token (remove in production)
-    // String authToken = ''; // Provide your authentication token if needed
-
-    // Reading auth token from secure storage
-    String? authToken;
-    try {
-      authToken = await storage.read(key: 'authToken'); // Read the token
-    } catch (e) {
-      print('Error reading authToken: $e');
-    }
-
-    if (authToken == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Authentication token not found')),
-      );
-      return;
-    }
-
     final response = await http.post(
       Uri.parse('http://127.0.0.1:5555/api/user-event'),
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer $authToken', // Include the token in headers
       },
       body: jsonEncode({
         'name': nameController.text,
@@ -158,14 +136,11 @@ class CreateScreen extends StatelessWidget {
     );
 
     if (response.statusCode == 201) {
+      final newEvent = jsonDecode(response.body);
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Event posted successfully!')),
       );
-      // Navigate back to HomeScreen after posting
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => HomeScreen()),
-      );
+      Navigator.pop(context, newEvent);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Failed to post event')),

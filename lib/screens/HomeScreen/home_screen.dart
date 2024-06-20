@@ -81,10 +81,16 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 220, 216, 226),
       appBar: AppBar(
-        title: const Text("What's The Vibe?"),
+        title: Text(
+          "What's The Vibe?",
+          style: TextStyle(
+            fontStyle: FontStyle.italic,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.logout),
+            icon: Icon(Icons.logout),
             onPressed: () {
               Navigator.pushReplacement(
                 context,

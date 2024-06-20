@@ -11,7 +11,13 @@ class ProfileScreen extends StatelessWidget {
       backgroundColor:
           const Color.fromARGB(255, 220, 216, 226), // Set background color
       appBar: AppBar(
-        title: Text('My Profile'),
+        title: Text(
+          'My Profile',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            // fontStyle: FontStyle.italic,
+          ),
+        ),
       ),
       body: Column(
         children: [
@@ -22,6 +28,8 @@ class ProfileScreen extends StatelessWidget {
               children: [
                 CircleAvatar(
                   radius: 30,
+                  // backgroundColor:
+                  //     Colors.black, // Set avatar background color to black
                   backgroundImage:
                       NetworkImage('https://example.com/avatar.png'),
                 ),
@@ -52,10 +60,10 @@ class ProfileScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 8),
                 EventCard(
-                  vibe: 'Everyday People',
+                  vibe: 'South House',
                   time: '5:00 PM',
-                  date: 'July 14th, 2024',
-                  location: 'Elsewhere',
+                  date: 'July 7th, 2024',
+                  location: 'The Well',
                   purchased: true,
                 ),
               ],
