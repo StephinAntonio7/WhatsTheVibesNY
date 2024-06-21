@@ -82,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: const Color.fromARGB(255, 220, 216, 226),
       appBar: AppBar(
         title: Text(
-          "What's The Vibe?",
+          "What's The Vibes?",
           style: TextStyle(
             fontStyle: FontStyle.italic,
             fontWeight: FontWeight.bold,

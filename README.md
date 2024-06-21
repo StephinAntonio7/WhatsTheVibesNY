@@ -1,16 +1,4 @@
-# phase5_project
+What's the Vibe's NY is a simple app where users can search for parties and events going on in NYC. Users can create their own event, save events for future reference and view upcoming & past events. 
 
-A new Flutter project.
+A one stop shop for viewing, creating & purchase tickets to events, shows and parties in NYC.
 
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
